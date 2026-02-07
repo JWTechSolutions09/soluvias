@@ -28,11 +28,14 @@ const Navbar = () => {
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
             <div className="relative">
-              <Wrench className="h-8 w-8" style={{ color: brand.theme.accent }} />
+              <Wrench className="h-6 w-6 sm:h-8 sm:w-8" style={{ color: brand.theme.accent }} />
             </div>
 
-            <span className="text-xl font-bold text-foreground whitespace-nowrap">
+            <span className="text-sm sm:text-xl font-bold text-foreground whitespace-nowrap hidden sm:inline">
               {brand.name}
+            </span>
+            <span className="text-sm font-bold text-foreground whitespace-nowrap sm:hidden">
+              International ASCC
             </span>
           </Link>
 

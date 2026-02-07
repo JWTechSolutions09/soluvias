@@ -7,7 +7,7 @@ export const brand = {
   phoneDisplay: "617 427 7060",
   phoneE164: "+16174277060",
   website: "www.internationalascc.com",
-  email: "info@internationalascc.com",
+  email: "intautoservice@gmail.com",
 address: "Boston, MA", // si no sabes exacto, pon esto por ahora
   mapsQuery: "International Auto Service & Collision Center Boston MA", // para link a Google Maps
   contactSubtitle: "Schedule your appointment now. We can help with insurance claims and towing.",
