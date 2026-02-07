@@ -254,11 +254,12 @@ const Projects = () => {
                     ) : null}
 
                     <Button
-                      className="w-full bg-tech-gradient hover:opacity-90 transition-opacity group mt-4"
+                      className="w-full bg-tech-gradient hover:opacity-90 transition-opacity group mt-4 text-sm sm:text-base whitespace-normal"
                       onClick={() => (window.location.href = "/contacto")}
                     >
-                      Schedule Your Appointment Now
-                      <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <span className="hidden sm:inline">Schedule Your Appointment Now</span>
+                      <span className="sm:hidden">Schedule Appointment</span>
+                      <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                     </Button>
                   </div>
                 </CardContent>

@@ -87,11 +87,12 @@ const Navbar = () => {
 
             <Button
               asChild
-              className="text-black hover:opacity-90 transition-opacity"
+              className="text-black hover:opacity-90 transition-opacity text-xs sm:text-sm whitespace-nowrap"
               style={{ backgroundColor: brand.theme.accent }}
             >
               <Link to="/contacto" className="flex items-center">
-                Schedule Your Appointment Now
+                <span className="hidden lg:inline">Schedule Your Appointment Now</span>
+                <span className="lg:hidden">Schedule Now</span>
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -158,13 +159,14 @@ const Navbar = () => {
 
               <Button
                 asChild
-                className="text-black hover:opacity-90 transition-opacity"
+                className="text-black hover:opacity-90 transition-opacity w-full"
                 style={{ backgroundColor: brand.theme.accent }}
                 onClick={() => setIsOpen(false)}
               >
-                <Link to="/contacto" className="flex items-center justify-center">
-                  Schedule Your Appointment Now
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Link to="/contacto" className="flex items-center justify-center whitespace-normal text-center px-2">
+                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
+                  <span className="sm:hidden">Schedule Appointment</span>
+                  <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
                 </Link>
               </Button>
             </div>

@@ -119,19 +119,20 @@ const Index = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contacto">
+              <Link to="/contacto" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="text-black transition-colors text-lg px-8 py-3"
+                  className="text-black transition-colors text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto whitespace-normal sm:whitespace-nowrap"
                   style={{ backgroundColor: brand.theme.accent }}
                 >
-                  Schedule Your Appointment Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
+                  <span className="sm:hidden">Schedule Appointment</span>
+                  <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
                 </Button>
               </Link>
 
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-3">
-                <a href={`tel:${brand.phoneE164}`} className="flex items-center">
+              <Button asChild size="lg" variant="outline" className="text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto">
+                <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
                   <Phone className="mr-2 h-5 w-5" />
                   Call {brand.phoneDisplay}
                 </a>
@@ -265,19 +266,23 @@ const Index = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contacto">
+              <Link to="/contacto" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="text-black hover:opacity-90 transition-opacity text-lg px-8 py-3"
+                  className="text-black hover:opacity-90 transition-opacity text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto whitespace-normal sm:whitespace-nowrap"
                   style={{ backgroundColor: brand.theme.accent }}
                 >
-                  Schedule Your Appointment Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
+                  <span className="sm:hidden">Schedule Appointment</span>
+                  <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
                 </Button>
               </Link>
 
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-3">
-                <a href={`tel:${brand.phoneE164}`}>Call Now</a>
+              <Button asChild size="lg" variant="outline" className="text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto">
+                <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Call Now
+                </a>
               </Button>
             </div>
           </div>

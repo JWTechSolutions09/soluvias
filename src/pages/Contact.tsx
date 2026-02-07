@@ -176,16 +176,16 @@ const Contact = () => {
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="text-black" style={{ backgroundColor: brand.theme.accent }}>
-              <a href={`tel:${brand.phoneE164}`}>
+            <Button asChild size="lg" className="text-black w-full sm:w-auto text-sm sm:text-lg px-4 sm:px-8 py-3" style={{ backgroundColor: brand.theme.accent }}>
+              <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
                 <Phone className="mr-2 h-5 w-5" />
                 Call {brand.phoneDisplay}
               </a>
             </Button>
 
             {websiteUrl ? (
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-3">
-                <a href={websiteUrl} target="_blank" rel="noreferrer">
+              <Button asChild size="lg" variant="outline" className="text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto">
+                <a href={websiteUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center">
                   Visit Website <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
@@ -408,8 +408,8 @@ const Contact = () => {
             Call us now and we’ll guide you through the next steps.
           </p>
 
-          <Button asChild size="lg" className="text-black" style={{ backgroundColor: brand.theme.accent }}>
-            <a href={`tel:${brand.phoneE164}`}>
+          <Button asChild size="lg" className="text-black w-full sm:w-auto text-sm sm:text-lg px-4 sm:px-8 py-3" style={{ backgroundColor: brand.theme.accent }}>
+            <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
               <Phone className="mr-2 h-5 w-5" />
               Call {brand.phoneDisplay}
             </a>

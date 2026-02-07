@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle, Wrench, Car, Paintbrush, ShieldCheck, Truck, Settings, Zap, Cog, CircleDot, Battery, Thermometer, Cloud, Users } from "lucide-react";
+import { ArrowRight, CheckCircle, Wrench, Car, Paintbrush, ShieldCheck, Truck, Settings, Zap, Cog, CircleDot, Battery, Thermometer, Cloud, Users, Phone } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
@@ -207,19 +207,23 @@ const Services = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contacto" className="inline-block">
+              <Link to="/contacto" className="w-full sm:w-auto inline-block">
                 <Button
                   size="lg"
-                  className="text-black hover:opacity-90 transition-opacity text-lg px-8 py-3"
+                  className="text-black hover:opacity-90 transition-opacity text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto whitespace-normal sm:whitespace-nowrap"
                   style={{ backgroundColor: brand.theme.accent }}
                 >
-                  Schedule Your Appointment Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
+                  <span className="sm:hidden">Schedule Appointment</span>
+                  <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
                 </Button>
               </Link>
 
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-3">
-                <a href={`tel:${brand.phoneE164}`}>Call {brand.phoneDisplay}</a>
+              <Button asChild size="lg" variant="outline" className="text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto">
+                <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Call {brand.phoneDisplay}
+                </a>
               </Button>
             </div>
           </div>
