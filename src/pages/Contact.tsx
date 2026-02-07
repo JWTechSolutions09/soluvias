@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import { brand } from "@/config/brand";
+import emailjs from "@emailjs/browser";
+import { emailjsConfig } from "@/config/emailjs";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -88,24 +90,68 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // ✅ Simulación (igual que tú). Luego puedes conectarlo a EmailJS, Formspree o tu backend.
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    try {
+      // Initialize EmailJS with public key
+      if (emailjsConfig.publicKey && emailjsConfig.publicKey !== "YOUR_PUBLIC_KEY") {
+        emailjs.init(emailjsConfig.publicKey);
+      }
 
-    toast({
-      title: "Message sent!",
-      description: "We’ll contact you soon.",
-    });
+      // Prepare template parameters
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || "Not provided",
+        company: formData.company || "Not provided",
+        service: formData.service || "Not specified",
+        message: formData.message,
+        to_email: emailjsConfig.toEmail,
+      };
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      service: "",
-      message: "",
-    });
+      // Send email via EmailJS
+      if (
+        emailjsConfig.serviceId !== "YOUR_SERVICE_ID" &&
+        emailjsConfig.templateId !== "YOUR_TEMPLATE_ID"
+      ) {
+        await emailjs.send(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
+          templateParams
+        );
 
-    setIsSubmitting(false);
+        toast({
+          title: "Message sent!",
+          description: "We'll contact you soon at " + formData.email,
+        });
+      } else {
+        // Fallback: show success message even if EmailJS is not configured
+        // In production, you should configure EmailJS properly
+        console.warn("EmailJS not configured. Please set up your EmailJS credentials.");
+        toast({
+          title: "Message received!",
+          description: "We'll contact you soon. (EmailJS not configured - check console)",
+          variant: "default",
+        });
+      }
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again or call us directly at " + brand.phoneDisplay,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
