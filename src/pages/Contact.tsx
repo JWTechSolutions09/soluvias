@@ -92,9 +92,7 @@ const Contact = () => {
 
     try {
       // Initialize EmailJS with public key
-      if (emailjsConfig.publicKey && emailjsConfig.publicKey !== "YOUR_PUBLIC_KEY") {
-        emailjs.init(emailjsConfig.publicKey);
-      }
+      emailjs.init(emailjsConfig.publicKey);
 
       // Prepare template parameters
       const templateParams = {
@@ -108,30 +106,34 @@ const Contact = () => {
       };
 
       // Send email via EmailJS
-      if (
-        emailjsConfig.serviceId !== "YOUR_SERVICE_ID" &&
-        emailjsConfig.templateId !== "YOUR_TEMPLATE_ID"
-      ) {
-        await emailjs.send(
-          emailjsConfig.serviceId,
-          emailjsConfig.templateId,
-          templateParams
-        );
+      await emailjs.send(
+        emailjsConfig.serviceId,
+        emailjsConfig.templateId,
+        templateParams
+      );
 
-        toast({
-          title: "Message sent!",
-          description: "We'll contact you soon at " + formData.email,
-        });
-      } else {
-        // Fallback: show success message even if EmailJS is not configured
-        // In production, you should configure EmailJS properly
-        console.warn("EmailJS not configured. Please set up your EmailJS credentials.");
-        toast({
-          title: "Message received!",
-          description: "We'll contact you soon. (EmailJS not configured - check console)",
-          variant: "default",
-        });
+      // Optionally send auto-reply to customer
+      if (emailjsConfig.autoReplyTemplateId && formData.email) {
+        try {
+          await emailjs.send(
+            emailjsConfig.serviceId,
+            emailjsConfig.autoReplyTemplateId,
+            {
+              to_name: formData.name,
+              to_email: formData.email,
+              service: formData.service || "your inquiry",
+            }
+          );
+        } catch (autoReplyError) {
+          // Auto-reply is optional, don't fail the main submission
+          console.warn("Auto-reply failed:", autoReplyError);
+        }
       }
+
+      toast({
+        title: "Message sent!",
+        description: "We'll contact you soon at " + formData.email,
+      });
 
       // Reset form
       setFormData({
