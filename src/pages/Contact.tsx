@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,18 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  // Initialize EmailJS once when component mounts
+  useEffect(() => {
+    try {
+      if (emailjsConfig.publicKey && emailjsConfig.publicKey !== "YOUR_PUBLIC_KEY") {
+        emailjs.init(emailjsConfig.publicKey);
+        console.log("EmailJS initialized with public key:", emailjsConfig.publicKey.substring(0, 10) + "...");
+      }
+    } catch (error) {
+      console.error("Failed to initialize EmailJS:", error);
+    }
+  }, []);
 
   const services = useMemo(() => {
     // Usamos los servicios del brand, + “Other”
@@ -91,11 +103,25 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Initialize EmailJS with public key
-      emailjs.init(emailjsConfig.publicKey);
+      // Verify EmailJS is configured
+      if (!emailjsConfig.publicKey || emailjsConfig.publicKey === "YOUR_PUBLIC_KEY") {
+        throw new Error("EmailJS is not configured. Please check your configuration.");
+      }
+      
+      if (!emailjsConfig.serviceId || emailjsConfig.serviceId === "YOUR_SERVICE_ID") {
+        throw new Error("EmailJS Service ID is not configured.");
+      }
+      
+      if (!emailjsConfig.templateId || emailjsConfig.templateId === "YOUR_TEMPLATE_ID") {
+        throw new Error("EmailJS Template ID is not configured.");
+      }
 
-      // Prepare template parameters
+      // Prepare template parameters - these must match your EmailJS template variables
       const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        user_name: formData.name,
+        user_email: formData.email,
         name: formData.name,
         email: formData.email,
         phone: formData.phone || "Not provided",
@@ -103,14 +129,17 @@ const Contact = () => {
         service: formData.service || "Not specified",
         message: formData.message,
         to_email: emailjsConfig.toEmail,
+        reply_to: formData.email,
       };
 
       // Send email via EmailJS
-      await emailjs.send(
+      const response = await emailjs.send(
         emailjsConfig.serviceId,
         emailjsConfig.templateId,
         templateParams
       );
+
+      console.log("EmailJS response:", response);
 
       // Optionally send auto-reply to customer
       if (emailjsConfig.autoReplyTemplateId && formData.email) {
@@ -121,12 +150,14 @@ const Contact = () => {
             {
               to_name: formData.name,
               to_email: formData.email,
+              user_name: formData.name,
+              user_email: formData.email,
               service: formData.service || "your inquiry",
             }
           );
         } catch (autoReplyError) {
           // Auto-reply is optional, don't fail the main submission
-          console.warn("Auto-reply failed:", autoReplyError);
+          console.warn("Auto-reply failed (this is optional):", autoReplyError);
         }
       }
 
@@ -144,11 +175,23 @@ const Contact = () => {
         service: "",
         message: "",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending email:", error);
+      console.error("Error details:", {
+        message: error?.message,
+        text: error?.text,
+        status: error?.status,
+        config: {
+          publicKey: emailjsConfig.publicKey,
+          serviceId: emailjsConfig.serviceId,
+          templateId: emailjsConfig.templateId,
+        }
+      });
+      
+      const errorMessage = error?.text || error?.message || "Unknown error occurred";
       toast({
         title: "Error sending message",
-        description: "Please try again or call us directly at " + brand.phoneDisplay,
+        description: errorMessage + ". Please try again or call us directly at " + brand.phoneDisplay,
         variant: "destructive",
       });
     } finally {
