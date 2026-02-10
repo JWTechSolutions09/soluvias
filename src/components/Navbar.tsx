@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, ArrowRight, Wrench, Image as ImageIcon } from "lucide-react";
+import { Menu, X, Phone, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { brand } from "@/config/brand";
 
@@ -12,99 +12,74 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "About", path: "/nosotros" },
     { name: "Services", path: "/servicios" },
-    { name: "Gallery", path: "/proyectos" }, // ✅ NUEVO
+    { name: "Gallery", path: "/proyectos" },
     { name: "Contact", path: "/contacto" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="navbar-metal sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto pl-2 sm:pl-4 lg:pl-6 pr-4 sm:pr-6 lg:pr-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+    <nav className="navbar-metal sticky top-0 z-50 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo Section */}
           <Link
             to="/"
-            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+            className="flex items-center space-x-3 group"
           >
             <div className="relative">
-              <Wrench className="h-6 w-6 sm:h-8 sm:w-8" style={{ color: brand.theme.accent }} />
+              <div className="absolute inset-0 bg-blue-500/20 rounded-lg blur-sm group-hover:blur-md transition-all"></div>
+              <div className="relative bg-gradient-to-br from-blue-600 to-blue-700 p-2 rounded-lg">
+                <Truck className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+              </div>
             </div>
-
-            <span className="text-sm sm:text-xl font-bold text-foreground whitespace-nowrap hidden sm:inline">
-              {brand.name}
-            </span>
-            <span className="text-sm font-bold text-foreground whitespace-nowrap sm:hidden">
-              International ASCC
-            </span>
+            <div className="flex flex-col">
+              <span className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
+                {brand.name.toUpperCase()}
+              </span>
+              <span className="text-xs text-gray-600 hidden sm:block">
+                24 HOURS RECOVERY SERVICES
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2 ml-8">
-            <div className="flex items-center space-x-2 mr-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`relative px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                    isActive(item.path)
-                      ? "bg-muted"
-                      : "text-foreground hover:bg-muted/60"
-                  }`}
-                  style={
-                    isActive(item.path)
-                      ? { color: brand.theme.accent }
-                      : undefined
-                  }
-                >
-                  {/* ✅ Icono solo para Gallery (opcional) */}
-                  {item.name === "Gallery" ? (
-                    <span className="inline-flex items-center gap-2">
-                      <ImageIcon className="h-4 w-4" />
-                      {item.name}
-                    </span>
-                  ) : (
-                    item.name
-                  )}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActive(item.path)
+                    ? "bg-blue-50 text-blue-600 font-semibold"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
 
-                  {isActive(item.path) && (
-                    <div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                      style={{ backgroundColor: brand.theme.accent }}
-                    />
-                  )}
-                </Link>
-              ))}
-            </div>
-
-            {/* CTAs */}
-            <Button asChild variant="outline" className="mr-2">
-              <a href={`tel:${brand.phoneE164}`} className="flex items-center">
-                <Phone className="mr-2 h-4 w-4" />
-                Call
-              </a>
-            </Button>
-
+          {/* CTA Button */}
+          <div className="hidden lg:flex items-center space-x-3 ml-6">
             <Button
               asChild
-              className="text-black hover:opacity-90 transition-opacity text-xs sm:text-sm whitespace-nowrap"
-              style={{ backgroundColor: brand.theme.accent }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 font-semibold shadow-lg hover:shadow-xl transition-all"
             >
-              <Link to="/contacto" className="flex items-center">
-                <span className="hidden lg:inline">Schedule Your Appointment Now</span>
-                <span className="lg:hidden">Schedule Now</span>
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              <a href={`tel:${brand.phoneE164}`} className="flex items-center">
+                <Phone className="mr-2 h-4 w-4" />
+                CALL NOW
+              </a>
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-foreground"
+              className="text-gray-700"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -113,61 +88,31 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t bg-card">
+          <div className="lg:hidden py-4 border-t border-gray-200 animate-fade-in-up">
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     isActive(item.path)
-                      ? "bg-muted"
-                      : "text-foreground hover:bg-muted/60"
+                      ? "bg-blue-50 text-blue-600 font-semibold"
+                      : "text-gray-700 hover:bg-gray-50"
                   }`}
-                  style={
-                    isActive(item.path)
-                      ? { color: brand.theme.accent }
-                      : undefined
-                  }
                 >
-                  {item.name === "Gallery" ? (
-                    <span className="inline-flex items-center gap-2">
-                      <ImageIcon className="h-4 w-4" />
-                      {item.name}
-                    </span>
-                  ) : (
-                    item.name
-                  )}
+                  {item.name}
                 </Link>
               ))}
-
               <Button
                 asChild
-                variant="outline"
-                className="mt-4"
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white w-full py-3 font-semibold"
                 onClick={() => setIsOpen(false)}
               >
-                <a
-                  href={`tel:${brand.phoneE164}`}
-                  className="flex items-center justify-center"
-                >
-                  <Phone className="mr-2 h-4 w-4" />
-                  Call {brand.phoneDisplay}
+                <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
+                  <Phone className="mr-2 h-5 w-5" />
+                  CALL NOW
                 </a>
-              </Button>
-
-              <Button
-                asChild
-                className="text-black hover:opacity-90 transition-opacity w-full"
-                style={{ backgroundColor: brand.theme.accent }}
-                onClick={() => setIsOpen(false)}
-              >
-                <Link to="/contacto" className="flex items-center justify-center whitespace-normal text-center px-2">
-                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
-                  <span className="sm:hidden">Schedule Appointment</span>
-                  <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
-                </Link>
               </Button>
             </div>
           </div>

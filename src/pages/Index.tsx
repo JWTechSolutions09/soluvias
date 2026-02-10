@@ -1,18 +1,18 @@
 import {
   ArrowRight,
-  Wrench,
-  Car,
-  ShieldCheck,
-  Paintbrush,
   Truck,
   Clock,
   Phone,
-  Cog,
   Star,
-  Settings,
   CheckCircle,
-  Cog as CogIcon,
-  Paintbrush as BodyShopIcon,
+  Zap,
+  Shield,
+  MapPin,
+  Wrench,
+  Battery,
+  Key,
+  Fuel,
+  AlertCircle,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,190 +21,220 @@ import Navbar from "@/components/Navbar";
 import { brand } from "@/config/brand";
 
 const Index = () => {
-  // ✅ Categorías principales de servicios
-  const serviceCategories = [
+  const services = [
     {
-      title: "Mechanical Repair Services",
-      description: "Complete mechanical repair services including engine, transmission, brakes, suspension, and more to keep your vehicle running smoothly.",
-      icon: <CogIcon className="h-12 w-12" style={{ color: brand.theme.accent }} />,
-      category: "mechanical",
-      link: "/servicios?category=mechanical",
+      title: "Emergency Towing",
+      description: "24/7 emergency towing service throughout Boston",
+      icon: <Truck className="h-8 w-8" />,
     },
     {
-      title: "Body Shop Services",
-      description: "Professional body shop services including collision repair, paint, dent removal, frame work, and insurance assistance.",
-      icon: <BodyShopIcon className="h-12 w-12" style={{ color: brand.theme.accent }} />,
-      category: "bodyShop",
-      link: "/servicios?category=bodyShop",
+      title: "Roadside Assistance",
+      description: "Jump starts, tire changes, lockouts, and more",
+      icon: <Wrench className="h-8 w-8" />,
+    },
+    {
+      title: "Heavy Duty Towing",
+      description: "Trucks, RVs, and commercial vehicles",
+      icon: <Truck className="h-8 w-8" />,
+    },
+    {
+      title: "Accident Recovery",
+      description: "Professional accident scene recovery",
+      icon: <AlertCircle className="h-8 w-8" />,
     },
   ];
 
-  // ✅ Testimonios (más acordes a taller)
+  const features = [
+    {
+      icon: <Clock className="h-6 w-6" />,
+      title: "24/7 Availability",
+      description: "Round-the-clock service whenever you need us",
+    },
+    {
+      icon: <Zap className="h-6 w-6" />,
+      title: "Fast Response",
+      description: "15-30 minute average response time",
+    },
+    {
+      icon: <Shield className="h-6 w-6" />,
+      title: "Licensed & Insured",
+      description: "Professional operators you can trust",
+    },
+    {
+      icon: <Truck className="h-6 w-6" />,
+      title: "All Vehicle Types",
+      description: "Cars, trucks, motorcycles, and more",
+    },
+  ];
+
   const testimonials = [
     {
       name: "Michael R.",
-      company: "Customer",
-      text: "They handled my insurance claim and the repair came out perfect. The car looks brand new.",
+      location: "Boston, MA",
+      text: "Got stuck in the snow last winter. They arrived in 20 minutes and got me out safely. Professional and fast!",
       rating: 5,
     },
     {
       name: "Sarah L.",
-      company: "Customer",
-      text: "Great communication and fast turnaround. Highly recommend for collision repairs.",
+      location: "Cambridge, MA",
+      text: "Our delivery truck broke down. Int Town Services came quickly and handled everything professionally. Highly recommend!",
       rating: 5,
     },
     {
       name: "Anthony C.",
-      company: "Customer",
-      text: "Excellent paint work and detailing. Very professional team.",
+      location: "Somerville, MA",
+      text: "They towed my motorcycle with such care. Specialized equipment and experienced operators. Couldn't be happier!",
       rating: 5,
     },
   ];
 
-  // ✅ Stats (antes era snacks)
-  const stats = [
-    { number: brand.est, label: "Trusted Experience" },
-    { number: "✅", label: "Schedule Your Appointment for Free" },
-    { number: "24/7", label: "Towing Available" },
-    { number: "⭐ 4.9", label: "Customer Rating" },
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative py-32 text-white overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-black/50"></div>
+      {/* Hero Section - New Design */}
+      <section className="relative min-h-[600px] flex items-center overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
+        </div>
 
-        {/* Glow Accent */}
-        <div
-          className="absolute -top-20 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full blur-3xl opacity-20"
-          style={{ backgroundColor: brand.theme.accent }}
-        />
+        {/* Decorative Elements */}
+        <div className="absolute top-20 right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex justify-center gap-2 flex-wrap text-sm mb-6 opacity-90">
-              <span className="px-3 py-1 rounded-full border border-white/15">
-                {brand.instagram}
-              </span>
-              <span className="px-3 py-1 rounded-full border border-white/15">
-                {brand.est}
-              </span>
-            </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-white space-y-8 animate-fade-in-up">
+              <div className="space-y-4">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  CAR TOWING SERVICES
+                  <br />
+                  <span className="text-blue-200">IN BOSTON</span>
+                </h1>
+                <p className="text-xl md:text-2xl text-blue-100 font-light">
+                  24 Hour Roadside Assistance and Vehicle Recovery
+                </p>
+              </div>
 
-           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-center">
-  <span className="inline-flex items-center gap-3">
-    <span style={{ color: brand.theme.accent }}>
-      INTERNATIONAL
-    </span>
-
-    <Settings
-      className="h-8 w-8 md:h-10 md:w-10"
-      style={{ color: brand.theme.accent }}
-    />
-  </span>
-
-  <br />
-
-  <span className="text-white">
-    Auto Service &amp; Collision Center
-  </span>
-</h1>
-
-
-            <p className="text-xl md:text-2xl text-white/85 mb-10 max-w-3xl mx-auto">
-              {brand.name}. Collision repair, dent removal, custom paint, frame repair and more.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contacto" className="w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Button
+                  asChild
                   size="lg"
-                  className="text-black transition-colors text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto whitespace-normal sm:whitespace-nowrap"
-                  style={{ backgroundColor: brand.theme.accent }}
+                  className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-8 py-6 font-semibold shadow-xl hover:shadow-2xl transition-all"
                 >
-                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
-                  <span className="sm:hidden">Schedule Appointment</span>
-                  <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
+                  <a href={`tel:${brand.phoneE164}`} className="flex items-center">
+                    <Phone className="mr-2 h-5 w-5" />
+                    CALL NOW
+                  </a>
                 </Button>
-              </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6 font-semibold"
+                >
+                  <Link to="/contacto" className="flex items-center">
+                    Request Service
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
 
-              <Button asChild size="lg" variant="outline" className="text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto">
-                <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call {brand.phoneDisplay}
-                </a>
-              </Button>
+              <div className="flex items-center gap-6 pt-4">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-blue-200" />
+                  <span className="text-blue-100">24/7 Service</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-blue-200" />
+                  <span className="text-blue-100">{brand.address}</span>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-8 text-sm text-white/70 space-y-1">
-              <div>{brand.website}</div>
-              <div>{brand.email}</div>
+            {/* Right Content - Visual Element */}
+            <div className="hidden lg:block relative">
+              <div className="relative">
+                <div className="absolute inset-0 bg-white/10 rounded-2xl blur-2xl transform rotate-6"></div>
+                <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl p-12 border border-white/20">
+                  <Truck className="h-64 w-64 mx-auto text-white/30 animate-float" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features/Services Section */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Services Overview Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-              Services We Offer
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Reliable 24-hour Car Towing Services
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Quality repairs, professional support, and clear guidance through the process.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Get the best car towing service from our team. We provide 24/7 roadside assistance for towing and breakdown recovery services with a fleet of recovery vehicles islandwide.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center max-w-4xl mx-auto">
-            {serviceCategories.map((category, index) => (
-              <Link key={index} to={category.link} className="w-full max-w-md">
-                <Card className="w-full bg-card-gradient border-0 shadow-medium hover:shadow-strong transition-all duration-300 hover:-translate-y-2 group cursor-pointer h-full">
-                  <CardContent className="p-8 text-center">
-                    <div className="flex justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                      {category.icon}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => (
+              <Card
+                key={index}
+                className="border-2 border-gray-100 hover:border-blue-500 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white"
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-blue-50 p-4 rounded-full text-blue-600">
+                      {service.icon}
                     </div>
-                    <h3 className="text-xl font-bold text-foreground mb-4">
-                      {category.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed text-justify">
-                      {category.description}
-                    </p>
-                    <div className="mt-6">
-                      <Button
-                        className="text-black hover:opacity-90 transition-opacity"
-                        style={{ backgroundColor: brand.theme.accent }}
-                      >
-                        View Services
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
           </div>
+
+          <div className="text-center mt-12">
+            <Button
+              asChild
+              variant="outline"
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-6 text-lg font-semibold"
+            >
+              <Link to="/servicios">
+                ABOUT US
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-muted/30">
+      {/* Features Section */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <div key={index} className="group">
-                <div
-                  className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300"
-                  style={{ color: brand.theme.accent }}
-                >
-                  {stat.number}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all border-l-4 border-blue-600"
+              >
+                <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+                  {feature.icon}
                 </div>
-                <div className="text-muted-foreground font-medium">
-                  {stat.label}
-                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -212,14 +242,14 @@ const Index = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-              What Customers Say
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              What Our Customers Say
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Your satisfaction is our priority.
+            <p className="text-xl text-gray-600">
+              Trusted by thousands of Boston residents
             </p>
           </div>
 
@@ -227,24 +257,23 @@ const Index = () => {
             {testimonials.map((testimonial, index) => (
               <Card
                 key={index}
-                className="bg-card-gradient border-0 shadow-medium hover:shadow-strong transition-all duration-300"
+                className="border border-gray-200 hover:border-blue-500 hover:shadow-xl transition-all bg-white"
               >
                 <CardContent className="p-8">
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="h-5 w-5 fill-current"
-                        style={{ color: brand.theme.accent }}
+                        className="h-5 w-5 fill-yellow-400 text-yellow-400"
                       />
                     ))}
                   </div>
-                  <p className="text-muted-foreground mb-6 italic">
+                  <p className="text-gray-700 mb-6 italic">
                     "{testimonial.text}"
                   </p>
                   <div>
-                    <p className="font-bold text-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                    <p className="font-bold text-gray-900">{testimonial.name}</p>
+                    <p className="text-sm text-gray-600">{testimonial.location}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -254,84 +283,24 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-card-gradient p-12 rounded-2xl shadow-strong">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              Need a Repair or Estimate?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Contact us today for Schedule Your Appointment. We also offer{" "}
-              <strong>{brand.ctas.secondary}</strong>.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contacto" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="text-black hover:opacity-90 transition-opacity text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto whitespace-normal sm:whitespace-nowrap"
-                  style={{ backgroundColor: brand.theme.accent }}
-                >
-                  <span className="hidden sm:inline">Schedule Your Appointment Now</span>
-                  <span className="sm:hidden">Schedule Appointment</span>
-                  <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-                </Button>
-              </Link>
-
-              <Button asChild size="lg" variant="outline" className="text-sm sm:text-lg px-4 sm:px-8 py-3 w-full sm:w-auto">
-                <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call Now
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose Us
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              "Schedule Your Free Appointment with clear guidance",
-              "Support with insurance claims",
-              "Quality repairs and professional finish",
-              "Reliable communication and updates",
-              "Pick-up & drop-off service available",
-              "Experienced team you can trust",
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center p-4 bg-card-gradient rounded-lg shadow-soft"
-              >
-                <CheckCircle
-                  className="h-6 w-6 mr-4 flex-shrink-0"
-                  style={{ color: brand.theme.accent }}
-                />
-                <span className="text-foreground font-medium">{item}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Hours quick block */}
-          <div className="mt-12 max-w-3xl mx-auto bg-muted/30 rounded-2xl p-6">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Clock className="h-5 w-5" style={{ color: brand.theme.accent }} />
-              <h3 className="text-lg font-bold text-foreground">Business Hours</h3>
-            </div>
-            <ul className="text-center text-muted-foreground space-y-1">
-              {brand.hours.map((h) => (
-                <li key={h}>{h}</li>
-              ))}
-            </ul>
-          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Need Emergency Towing?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            Don't wait! Call us now for immediate 24/7 assistance.
+          </p>
+          <Button
+            asChild
+            size="lg"
+            className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-10 py-6 font-semibold shadow-xl hover:shadow-2xl transition-all"
+          >
+            <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
+              <Phone className="mr-2 h-6 w-6" />
+              CALL {brand.phoneDisplay}
+            </a>
+          </Button>
         </div>
       </section>
     </div>

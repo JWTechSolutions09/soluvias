@@ -1,107 +1,143 @@
-import { Users, Target, Lightbulb, Award } from "lucide-react";
+import { useState } from "react";
+import { Users, Target, Lightbulb, Award, Truck, Clock, Shield, Zap, Star, CheckCircle, ArrowRight, TrendingUp, Heart, Phone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
 import { brand } from "@/config/brand";
 
 const About = () => {
+  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
+  const [hoveredTeam, setHoveredTeam] = useState<number | null>(null);
+
   const values = [
     {
-      icon: <Target className="h-8 w-8" style={{ color: brand.theme.accent }} />,
+      icon: <Target className="h-8 w-8" />,
       title: "Mission",
       description: brand.about.mission,
+      color: "from-blue-500 to-blue-600",
     },
     {
-      icon: <Lightbulb className="h-8 w-8" style={{ color: brand.theme.accent }} />,
+      icon: <Lightbulb className="h-8 w-8" />,
       title: "Vision",
       description: brand.about.vision,
+      color: "from-purple-500 to-purple-600",
     },
     {
-      icon: <Award className="h-8 w-8" style={{ color: brand.theme.accent }} />,
+      icon: <Award className="h-8 w-8" />,
       title: "Values",
       description: brand.about.values,
+      color: "from-green-500 to-green-600",
     },
+  ];
+
+  const stats = [
+    { number: "15-30", label: "Min Response", icon: <Zap className="h-6 w-6" />, color: "text-yellow-500" },
+    { number: "24/7", label: "Available", icon: <Clock className="h-6 w-6" />, color: "text-blue-500" },
+    { number: "1000+", label: "Customers", icon: <Users className="h-6 w-6" />, color: "text-green-500" },
+    { number: "4.9", label: "Rating", icon: <Star className="h-6 w-6" />, color: "text-yellow-500" },
   ];
 
   const team = brand.team;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative py-20 text-white overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-black/50"></div>
-
-        {/* Accent glow */}
-        <div
-          className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full blur-3xl opacity-20"
-          style={{ backgroundColor: brand.theme.accent }}
-        />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center gap-2 flex-wrap text-sm mb-6 opacity-90">
-            <span className="px-3 py-1 rounded-full border border-white/15">
-              {brand.instagram}
-            </span>
-            <span className="px-3 py-1 rounded-full border border-white/15">
-              {brand.est}
-            </span>
+      {/* Hero Section - Interactive */}
+      <section className="relative py-16 bg-white overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6">
+              <Heart className="h-5 w-5 text-blue-600" />
+              <span className="text-sm font-semibold text-blue-600">OUR STORY</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+              {brand.about.heroTitle}
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {brand.about.heroSubtitle}
+            </p>
           </div>
-
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            {brand.about.heroTitle}
-          </h1>
-
-          <p className="text-xl md:text-2xl text-white/85 max-w-3xl mx-auto">
-            {brand.about.heroSubtitle}
-          </p>
         </div>
       </section>
 
-      {/* Historia Section */}
-      <section className="py-20">
+      {/* Stats Section - New Interactive */}
+      <section className="py-12 bg-gradient-to-r from-blue-600 to-blue-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center transform transition-all duration-300 hover:scale-110 hover:bg-white/20 animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={`inline-flex p-3 rounded-full bg-white/20 mb-4 ${stat.color}`}>
+                  {stat.icon}
+                </div>
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.number}</div>
+                <div className="text-blue-100 text-sm font-semibold">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Story Section - Reordered */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            <div className="relative order-2 md:order-1">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl transform rotate-6 opacity-50"></div>
+              <div className="relative bg-gradient-to-br from-blue-50 to-white p-12 rounded-3xl border-2 border-blue-200 shadow-xl">
+                <Truck className="h-56 w-56 mx-auto text-blue-600/20 animate-float" />
+                <div className="absolute top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  Since {brand.est.split(' ')[1]}
+                </div>
+              </div>
+            </div>
+            <div className="order-1 md:order-2 animate-fade-in-up">
+              <div className="inline-block bg-blue-50 px-4 py-2 rounded-full mb-4">
+                <span className="text-sm font-semibold text-blue-600">OUR JOURNEY</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 {brand.about.storyTitle}
               </h2>
-
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              <p className="text-lg text-gray-600 leading-relaxed mb-6">
                 {brand.about.storyP1}
               </p>
-
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed mb-6">
                 {brand.about.storyP2}
               </p>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-blue-600">
+                  <CheckCircle className="h-5 w-5" />
+                  <span className="font-semibold">Licensed & Insured</span>
+                </div>
+                <div className="flex items-center gap-2 text-blue-600">
+                  <Shield className="h-5 w-5" />
+                  <span className="font-semibold">24/7 Service</span>
+                </div>
+              </div>
             </div>
-
-            <div className="relative rounded-2xl overflow-hidden shadow-medium bg-card-gradient">
-  <img
-    src="/images/our-story.jpeg"
-    alt="International Auto Service & Collision Center workshop"
-    className="w-full h-64 md:h-80 object-cover opacity-85"
-  />
-
-  {/* Overlay oscuro para integrarlo al diseño */}
-  <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/40 to-transparent" />
-
-  {/* Borde sutil industrial */}
-  <div className="absolute inset-0 ring-1 ring-white/10 rounded-2xl" />
-</div>
-
           </div>
         </div>
       </section>
 
-      {/* Valores Section */}
-      <section className="py-20 bg-muted/30">
+      {/* Values Section - Interactive Cards */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Mission, Vision & Values
+            <div className="inline-block bg-blue-50 px-4 py-2 rounded-full mb-4">
+              <span className="text-sm font-semibold text-blue-600">OUR CORE VALUES</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Mission, Vision & Values
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               The principles that guide our work and customer experience.
             </p>
           </div>
@@ -110,16 +146,37 @@ const About = () => {
             {values.map((value, index) => (
               <Card
                 key={index}
-                className="bg-card-gradient border-0 shadow-medium hover:shadow-strong transition-all duration-300 hover:-translate-y-2"
+                className={`border-2 transition-all duration-500 cursor-pointer overflow-hidden ${
+                  hoveredValue === index
+                    ? "border-blue-500 shadow-2xl scale-105"
+                    : "border-gray-200 hover:border-blue-300 hover:shadow-xl"
+                } bg-white animate-fade-in-up`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onMouseEnter={() => setHoveredValue(index)}
+                onMouseLeave={() => setHoveredValue(null)}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="flex justify-center mb-4">{value.icon}</div>
-                  <h3 className="text-xl font-bold text-foreground mb-3">
+                <div className={`h-2 bg-gradient-to-r ${value.color} transition-all duration-500 ${
+                  hoveredValue === index ? "h-3" : ""
+                }`}></div>
+                <CardContent className="p-8 text-center relative">
+                  <div className={`mb-6 transform transition-all duration-500 ${
+                    hoveredValue === index ? "scale-125 rotate-6" : ""
+                  }`}>
+                    <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${value.color} text-white shadow-lg`}>
+                      {value.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     {value.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed">
                     {value.description}
                   </p>
+                  {hoveredValue === index && (
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                      <ArrowRight className="h-5 w-5 text-blue-600 animate-pulse" />
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -127,15 +184,18 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-20">
+      {/* Team Section - Interactive */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <div className="inline-block bg-blue-50 px-4 py-2 rounded-full mb-4">
+              <span className="text-sm font-semibold text-blue-600">MEET THE TEAM</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Our Team
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experienced professionals committed to quality repairs and clear communication.
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Experienced professionals committed to fast response times and safe vehicle handling.
             </p>
           </div>
 
@@ -143,25 +203,77 @@ const About = () => {
             {team.map((member, index) => (
               <Card
                 key={index}
-                className="bg-card-gradient border-0 shadow-medium hover:shadow-strong transition-all duration-300"
+                className={`border-2 transition-all duration-300 cursor-pointer overflow-hidden ${
+                  hoveredTeam === index
+                    ? "border-blue-500 shadow-2xl scale-105 bg-blue-50"
+                    : "border-gray-200 hover:border-blue-300 hover:shadow-xl bg-white"
+                } animate-fade-in-up`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onMouseEnter={() => setHoveredTeam(index)}
+                onMouseLeave={() => setHoveredTeam(null)}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-24 h-24 bg-muted/40 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users
-                      className="h-12 w-12"
-                      style={{ color: brand.theme.accent }}
-                    />
+                <CardContent className="p-8 text-center relative">
+                  <div className={`mb-6 transform transition-all duration-300 ${
+                    hoveredTeam === index ? "scale-110" : ""
+                  }`}>
+                    <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto transition-all duration-300 ${
+                      hoveredTeam === index
+                        ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-xl"
+                        : "bg-blue-50 text-blue-600"
+                    }`}>
+                      <Truck className="h-12 w-12" />
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {member.name}
                   </h3>
-                  <p className="font-medium mb-3" style={{ color: brand.theme.accent }}>
-                    {member.role}
-                  </p>
-                  <p className="text-muted-foreground">{member.description}</p>
+                  <div className={`inline-block px-4 py-1 rounded-full mb-3 transition-all duration-300 ${
+                    hoveredTeam === index
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-50 text-blue-600"
+                  }`}>
+                    <p className="font-semibold text-sm">{member.role}</p>
+                  </div>
+                  <p className="text-gray-600">{member.description}</p>
+                  {hoveredTeam === index && (
+                    <div className="mt-4 flex justify-center gap-2">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping"></div>
+                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping" style={{ animationDelay: "0.2s" }}></div>
+                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping" style={{ animationDelay: "0.4s" }}></div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "1.5s" }}></div>
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+            <TrendingUp className="h-5 w-5 text-white" />
+            <span className="text-sm font-semibold text-white">GROWING WITH YOU</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to Experience Our Service?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Join thousands of satisfied customers who trust us for their towing needs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${brand.phoneE164}`}
+              className="inline-flex items-center justify-center bg-white text-blue-600 hover:bg-blue-50 text-lg px-10 py-6 font-semibold rounded-xl shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
+            >
+              <Phone className="mr-2 h-6 w-6" />
+              CALL NOW
+            </a>
           </div>
         </div>
       </section>

@@ -8,9 +8,9 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-  /* Base (Dark as default for this client) */
-  --background: 0 0% 4%;
-  --foreground: 0 0% 98%;
+  /* Base (Light theme for towing) */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
 
   --card: 0 0% 7%;
   --card-foreground: 0 0% 98%;
@@ -18,40 +18,38 @@ All colors MUST be HSL.
   --popover: 0 0% 7%;
   --popover-foreground: 0 0% 98%;
 
-  /* Brand Yellow */
-  --primary: 44 95% 55%;
-  --primary-foreground: 0 0% 8%;
+  /* Brand Blue for Towing */
+  --primary: 210 100% 40%;
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 10%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 210 100% 25%;
+  --secondary-foreground: 0 0% 100%;
 
-  --muted: 0 0% 12%;
-  --muted-foreground: 0 0% 70%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 40%;
 
-  /* Keep accent = brand yellow so text-accent works */
-  --accent: 44 95% 55%;
-  --accent-foreground: 0 0% 8%;
+  /* Accent = brand blue */
+  --accent: 210 100% 40%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive-foreground: 0 0% 100%;
 
-  --border: 0 0% 16%;
-  --input: 0 0% 16%;
-  --ring: 44 95% 55%;
+  --border: 210 100% 40% / 0.2;
+  --input: 210 100% 40% / 0.1;
+  --ring: 210 100% 40%;
 
-  /* ✅ Your custom gradients (still used in components) */
-  --tech-gradient: linear-gradient(90deg, hsl(44 95% 55%), hsl(48 98% 62%));
+  /* Custom gradients for blue theme */
+  --tech-gradient: linear-gradient(135deg, hsl(210 100% 40%), hsl(210 100% 50%));
   --hero-gradient:
-    radial-gradient(800px circle at 20% 20%, hsl(44 95% 55% / 0.20), transparent 55%),
-    radial-gradient(600px circle at 80% 70%, hsl(44 95% 55% / 0.12), transparent 60%),
-    linear-gradient(180deg, hsl(0 0% 2%), hsl(0 0% 6%));
+    linear-gradient(135deg, hsl(210 100% 25%) 0%, hsl(210 100% 40%) 50%, hsl(210 100% 50%) 100%);
 
-  --card-gradient: linear-gradient(180deg, hsl(0 0% 10% / 0.55), hsl(0 0% 6% / 0.45));
+  --card-gradient: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 100% 98%));
 
-  /* ✅ Shadows now match yellow brand */
-  --shadow-soft: 0 4px 20px hsl(44 95% 55% / 0.10);
-  --shadow-medium: 0 8px 30px hsl(44 95% 55% / 0.14);
-  --shadow-strong: 0 12px 40px hsl(44 95% 55% / 0.18);
+  /* Shadows with blue tint */
+  --shadow-soft: 0 4px 20px hsl(210 100% 40% / 0.1);
+  --shadow-medium: 0 8px 30px hsl(210 100% 40% / 0.15);
+  --shadow-strong: 0 12px 40px hsl(210 100% 40% / 0.2);
 
   --radius: 0.75rem;
 
@@ -77,33 +75,33 @@ All colors MUST be HSL.
   --popover: 0 0% 7%;
   --popover-foreground: 0 0% 98%;
 
-  --primary: 44 95% 55%;
-  --primary-foreground: 0 0% 8%;
+  --primary: 210 100% 50%;
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 10%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 210 100% 25%;
+  --secondary-foreground: 0 0% 100%;
 
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 70%;
 
-  --accent: 44 95% 55%;
-  --accent-foreground: 0 0% 8%;
+  --accent: 210 100% 50%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 0 0% 16%;
-  --input: 0 0% 16%;
-  --ring: 44 95% 55%;
+  --border: 210 100% 40% / 0.2;
+  --input: 210 100% 40% / 0.1;
+  --ring: 210 100% 50%;
 
   --sidebar-background: 0 0% 6%;
   --sidebar-foreground: 0 0% 95%;
-  --sidebar-primary: 44 95% 55%;
-  --sidebar-primary-foreground: 0 0% 8%;
+  --sidebar-primary: 210 100% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 95%;
   --sidebar-border: 0 0% 16%;
-  --sidebar-ring: 44 95% 55%;
+  --sidebar-ring: 210 100% 50%;
 }
 
 }
@@ -126,47 +124,80 @@ All colors MUST be HSL.
   position: sticky;
   top: 0;
   z-index: 50;
-
-  /* Fondo base metálico */
-  background:
-    /* Remaches MUY sutiles */
-    radial-gradient(circle at 20px 50%, rgba(255,255,255,.08) 0 2px, transparent 3px),
-    radial-gradient(circle at 60px 50%, rgba(255,255,255,.08) 0 2px, transparent 3px),
-
-    /* Brillo central */
-    radial-gradient(
-      ellipse at top,
-      rgba(255,255,255,.06),
-      rgba(255,255,255,0) 60%
-    ),
-
-    /* Metal oscuro */
-    linear-gradient(
-      180deg,
-      #0c0c0c 0%,
-      #161616 45%,
-      #0e0e0e 100%
-    );
-
-  background-size:
-    80px 100%,   /* patrón de remaches */
-    80px 100%,
-    100% 100%,
-    100% 100%;
-
-  backdrop-filter: blur(6px);
-
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,.07),
-    inset 0 -2px 4px rgba(0,0,0,.9),
-    0 4px 14px rgba(0,0,0,.85);
-
-  border-bottom: 1px solid rgba(255,255,255,.05);
+  background: white;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 102, 204, 0.1);
+  border-bottom: 2px solid hsl(210 100% 40% / 0.1);
+  transition: all 0.3s ease;
 }
 
-
 .navbar-metal:hover {
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    0 6px 20px rgba(255,193,7,.18);
+  box-shadow: 0 4px 30px rgba(0, 102, 204, 0.15);
+  border-bottom-color: hsl(210 100% 40% / 0.3);
+}
+
+/* Blue theme animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(210 100% 40% / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(210 100% 40% / 0.6);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
