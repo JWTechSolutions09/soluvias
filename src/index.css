@@ -18,50 +18,50 @@ All colors MUST be HSL.
   --popover: 0 0% 7%;
   --popover-foreground: 0 0% 98%;
 
-  /* Brand Blue for Towing */
-  --primary: 210 100% 40%;
+  /* Brand Red/Yellow for Towing */
+  --primary: 0 84% 60%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 210 100% 25%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 45 93% 58%;
+  --secondary-foreground: 0 0% 8%;
 
   --muted: 0 0% 96%;
   --muted-foreground: 0 0% 40%;
 
-  /* Accent = brand blue */
-  --accent: 210 100% 40%;
+  /* Accent = brand red */
+  --accent: 0 84% 60%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 210 100% 40% / 0.2;
-  --input: 210 100% 40% / 0.1;
-  --ring: 210 100% 40%;
+  --border: 0 84% 60% / 0.2;
+  --input: 0 84% 60% / 0.1;
+  --ring: 0 84% 60%;
 
-  /* Custom gradients for blue theme */
-  --tech-gradient: linear-gradient(135deg, hsl(210 100% 40%), hsl(210 100% 50%));
+  /* Custom gradients for red/yellow theme */
+  --tech-gradient: linear-gradient(135deg, hsl(0 84% 60%), hsl(45 93% 58%));
   --hero-gradient:
-    linear-gradient(135deg, hsl(210 100% 25%) 0%, hsl(210 100% 40%) 50%, hsl(210 100% 50%) 100%);
+    linear-gradient(135deg, hsl(0 84% 50%) 0%, hsl(0 84% 60%) 50%, hsl(45 93% 58%) 100%);
 
-  --card-gradient: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 100% 98%));
+  --card-gradient: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
 
-  /* Shadows with blue tint */
-  --shadow-soft: 0 4px 20px hsl(210 100% 40% / 0.1);
-  --shadow-medium: 0 8px 30px hsl(210 100% 40% / 0.15);
-  --shadow-strong: 0 12px 40px hsl(210 100% 40% / 0.2);
+  /* Shadows with red/yellow tint */
+  --shadow-soft: 0 4px 20px hsl(0 84% 60% / 0.15);
+  --shadow-medium: 0 8px 30px hsl(0 84% 60% / 0.2);
+  --shadow-strong: 0 12px 40px hsl(0 84% 60% / 0.25);
 
   --radius: 0.75rem;
 
   /* Sidebar tokens (keep consistent) */
   --sidebar-background: 0 0% 6%;
   --sidebar-foreground: 0 0% 95%;
-  --sidebar-primary: 44 95% 55%;
-  --sidebar-primary-foreground: 0 0% 8%;
+  --sidebar-primary: 0 84% 60%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 95%;
   --sidebar-border: 0 0% 16%;
-  --sidebar-ring: 44 95% 55%;
+  --sidebar-ring: 0 84% 60%;
 }
 
 
@@ -75,33 +75,33 @@ All colors MUST be HSL.
   --popover: 0 0% 7%;
   --popover-foreground: 0 0% 98%;
 
-  --primary: 210 100% 50%;
+  --primary: 0 84% 60%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 210 100% 25%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 45 93% 58%;
+  --secondary-foreground: 0 0% 8%;
 
   --muted: 0 0% 12%;
   --muted-foreground: 0 0% 70%;
 
-  --accent: 210 100% 50%;
+  --accent: 0 84% 60%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 210 100% 40% / 0.2;
-  --input: 210 100% 40% / 0.1;
-  --ring: 210 100% 50%;
+  --border: 0 84% 60% / 0.2;
+  --input: 0 84% 60% / 0.1;
+  --ring: 0 84% 60%;
 
   --sidebar-background: 0 0% 6%;
   --sidebar-foreground: 0 0% 95%;
-  --sidebar-primary: 210 100% 50%;
+  --sidebar-primary: 0 84% 60%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 95%;
   --sidebar-border: 0 0% 16%;
-  --sidebar-ring: 210 100% 50%;
+  --sidebar-ring: 0 84% 60%;
 }
 
 }
@@ -126,23 +126,23 @@ All colors MUST be HSL.
   z-index: 50;
   background: white;
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 102, 204, 0.1);
-  border-bottom: 2px solid hsl(210 100% 40% / 0.1);
+  box-shadow: 0 2px 20px rgba(220, 38, 38, 0.1);
+  border-bottom: 2px solid hsl(0 84% 60% / 0.1);
   transition: all 0.3s ease;
 }
 
 .navbar-metal:hover {
-  box-shadow: 0 4px 30px rgba(0, 102, 204, 0.15);
-  border-bottom-color: hsl(210 100% 40% / 0.3);
+  box-shadow: 0 4px 30px rgba(220, 38, 38, 0.15);
+  border-bottom-color: hsl(0 84% 60% / 0.3);
 }
 
-/* Blue theme animations */
+/* Red/Yellow theme animations */
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px hsl(210 100% 40% / 0.3);
+    box-shadow: 0 0 20px hsl(0 84% 60% / 0.3);
   }
   50% {
-    box-shadow: 0 0 40px hsl(210 100% 40% / 0.6);
+    box-shadow: 0 0 40px hsl(0 84% 60% / 0.6);
   }
 }
 
@@ -186,6 +186,46 @@ All colors MUST be HSL.
   }
 }
 
+@keyframes zoom-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes image-zoom {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
@@ -200,4 +240,16 @@ All colors MUST be HSL.
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+.animate-zoom-in {
+  animation: zoom-in 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out;
+}
+
+.animate-image-zoom {
+  animation: image-zoom 8s ease-in-out infinite;
 }

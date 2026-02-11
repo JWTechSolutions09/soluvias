@@ -61,8 +61,8 @@ const Projects = () => {
               }}
             />
           ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
-              <Truck className="h-16 w-16 text-blue-600/30" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-red-100 to-yellow-100">
+              <Truck className="h-16 w-16 text-red-600/30" />
               <span className="text-xs text-gray-500 mt-2">IMAGE</span>
             </div>
           )}
@@ -139,31 +139,86 @@ const Projects = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative py-16 bg-white overflow-hidden">
+      {/* Hero Section with Images */}
+      <section className="relative py-20 bg-white overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-5">
+          <img
+            src="/images/Camion Luces.jpg"
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-50 animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-600">OUR WORK</span>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-center md:text-left">
+              <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full mb-6">
+                <Sparkles className="h-5 w-5 text-red-600" />
+                <span className="text-sm font-semibold text-red-600">OUR WORK</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                Service Gallery
+              </h1>
+              <p className="text-xl text-gray-600">
+                Professional towing and roadside assistance. See our fleet and service capabilities.
+              </p>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              Service Gallery
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Professional towing and roadside assistance. See our fleet and service capabilities.
-            </p>
+            
+            {/* Hero Images Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up">
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camion choquecrv.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camion choquesedan.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camion lluvia.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camiion carretera.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Interactive Filter Section */}
-      <section className="py-12 bg-gradient-to-r from-blue-600 to-blue-700 sticky top-20 z-40 shadow-lg">
+      <section className="py-12 bg-gradient-to-r from-red-600 to-red-700 sticky top-20 z-40 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <Filter className="h-5 w-5 text-white" />
@@ -173,13 +228,50 @@ const Projects = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform ${
                   selectedCategory === category
-                    ? "bg-white text-blue-600 shadow-xl scale-110"
+                    ? "bg-white text-red-600 shadow-xl scale-110"
                     : "bg-white/20 text-white hover:bg-white/30 hover:scale-105"
                 } animate-fade-in-up`}
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 {category}
               </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Images Section */}
+      <section className="py-12 bg-gradient-to-r from-red-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900">Our Fleet Showcase</h3>
+            <p className="text-gray-600">Professional vehicles ready to serve you</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { src: "/images/Camiion carretera.jpg", title: "Highway Service" },
+              { src: "/images/Camion parqueado.jpg", title: "Day Service" },
+              { src: "/images/Camion lluvia.jpg", title: "24/7 Available" },
+              { src: "/images/Camion Luces.jpg", title: "Night Service" },
+            ].map((img, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={img.src}
+                    alt={img.title}
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-125"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <p className="text-white text-xs font-semibold">{img.title}</p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -194,8 +286,8 @@ const Projects = () => {
                 key={item.id}
                 className={`border-2 transition-all duration-500 cursor-pointer overflow-hidden group ${
                   hoveredProject === item.id
-                    ? "border-blue-500 shadow-2xl scale-105"
-                    : "border-gray-200 hover:border-blue-300 hover:shadow-xl bg-white"
+                    ? "border-red-500 shadow-2xl scale-105"
+                    : "border-gray-200 hover:border-red-300 hover:shadow-xl bg-white"
                 } animate-fade-in-up`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 onMouseEnter={() => setHoveredProject(item.id)}
@@ -205,11 +297,11 @@ const Projects = () => {
 
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-red-600 transition-colors">
                       {item.title}
                     </CardTitle>
                     {hoveredProject === item.id && (
-                      <div className="bg-blue-600 text-white p-2 rounded-full animate-pulse">
+                      <div className="bg-red-600 text-white p-2 rounded-full animate-pulse">
                         <ExternalLink className="h-4 w-4" />
                       </div>
                     )}
@@ -238,19 +330,19 @@ const Projects = () => {
                         <ul className="text-xs text-gray-600 space-y-1">
                           {item.highlights.slice(0, 3).map((h, idx) => (
                             <li key={idx} className="flex items-center">
-                              <CheckCircle className="h-3 w-3 mr-2 text-blue-600 flex-shrink-0" />
+                              <CheckCircle className="h-3 w-3 mr-2 text-red-600 flex-shrink-0" />
                               {h}
                             </li>
                           ))}
                           {item.highlights.length > 3 && (
-                            <li className="text-blue-600 font-semibold">+{item.highlights.length - 3} more...</li>
+                            <li className="text-red-600 font-semibold">+{item.highlights.length - 3} more...</li>
                           )}
                         </ul>
                       </div>
                     ) : null}
 
                     <Button
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white transition-all transform hover:scale-105 group mt-4"
+                      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white transition-all transform hover:scale-105 group mt-4"
                       onClick={() => (window.location.href = "/contacto")}
                     >
                       Request Service
@@ -272,13 +364,13 @@ const Projects = () => {
       </section>
 
       {/* Stats Section - Interactive */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-700">
+      <section className="py-20 bg-gradient-to-r from-red-600 to-red-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-6">
             {(brand.galleryStats || [
               { number: "15-30", label: "Min Response Time" },
               { number: "24/7", label: "Emergency Service" },
-              { number: "1000+", label: "Happy Customers" },
+              { number: "+100", label: "Happy Customers" },
               { number: "⭐ 4.9", label: "Customer Rating" },
             ]).map((s, idx) => (
               <div
@@ -287,7 +379,7 @@ const Projects = () => {
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <div className="text-4xl md:text-5xl font-bold text-white mb-2">{s.number}</div>
-                <div className="text-blue-100 font-semibold">{s.label}</div>
+                <div className="text-red-100 font-semibold">{s.label}</div>
               </div>
             ))}
           </div>

@@ -60,44 +60,78 @@ const Services = () => {
   const process = brand.processSteps || [];
 
   const quickCategories = [
-    { name: "All", category: "all", icon: <Sparkles className="h-5 w-5" />, color: "from-blue-500 to-blue-600" },
+    { name: "All", category: "all", icon: <Sparkles className="h-5 w-5" />, color: "from-red-500 to-red-600" },
     { name: "Emergency", category: "emergency", icon: <AlertCircle className="h-5 w-5" />, color: "from-red-500 to-red-600" },
-    { name: "Specialized", category: "specialized", icon: <Truck className="h-5 w-5" />, color: "from-purple-500 to-purple-600" },
+    { name: "Specialized", category: "specialized", icon: <Truck className="h-5 w-5" />, color: "from-yellow-400 to-yellow-500" },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative py-16 bg-white overflow-hidden">
+      {/* Hero Section with Image */}
+      <section className="relative py-20 bg-white overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-10">
+          <img
+            src="/images/Camion lluvia.jpg"
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-50 animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <Truck className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-600">OUR SERVICES</span>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-center md:text-left">
+              <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full mb-6">
+                <Truck className="h-5 w-5 text-red-600" />
+                <span className="text-sm font-semibold text-red-600">OUR SERVICES</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                {categoryTitle}
+              </h1>
+              <p className="text-xl text-gray-600">
+                {category === "emergency" 
+                  ? "24/7 emergency towing and roadside assistance throughout Boston. Fast response times when you need help most."
+                  : category === "specialized"
+                  ? "Specialized towing services for all vehicle types. Professional equipment and experienced operators."
+                  : "Professional towing and roadside assistance services. Fast, reliable, and safe vehicle transport."}
+              </p>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              {categoryTitle}
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {category === "emergency" 
-                ? "24/7 emergency towing and roadside assistance throughout Boston. Fast response times when you need help most."
-                : category === "specialized"
-                ? "Specialized towing services for all vehicle types. Professional equipment and experienced operators."
-                : "Professional towing and roadside assistance services. Fast, reliable, and safe vehicle transport."}
-            </p>
+            
+            {/* Hero Image */}
+            <div className="relative hidden md:block">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+                <div className="aspect-[4/3]">
+                  <img
+                    src="/images/Camion choquesedan.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-red-900/40 to-transparent"></div>
+              </div>
+              
+              {/* Floating Logo */}
+              <div className="absolute -bottom-6 -right-6 w-28 h-28 bg-white rounded-full p-3 shadow-2xl border-4 border-red-600 animate-float overflow-hidden">
+                <img
+                  src="/images/Logo.png"
+                  alt="Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Quick Category Selector */}
-      <section className="py-8 bg-gradient-to-r from-blue-600 to-blue-700">
+      <section className="py-8 bg-gradient-to-r from-red-600 to-red-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center gap-4 flex-wrap">
             {quickCategories.map((cat, index) => (
@@ -120,6 +154,39 @@ const Services = () => {
         </div>
       </section>
 
+      {/* Image Showcase Section */}
+      <section className="py-12 bg-gradient-to-r from-red-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              "/images/Camiion carretera.jpg",
+              "/images/Camion choquecrv.jpg",
+              "/images/Camion choquesedan.jpg",
+              "/images/Camion lluvia.jpg",
+            ].map((src, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={src}
+                    alt={`Towing service ${index + 1}`}
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-125"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <p className="text-white text-xs font-semibold">Professional Service</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services Grid */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -129,14 +196,14 @@ const Services = () => {
                 key={index}
                 className={`border-2 transition-all duration-500 cursor-pointer overflow-hidden ${
                   hoveredService === index
-                    ? "border-blue-500 shadow-2xl scale-105 bg-blue-50"
-                    : "border-gray-200 hover:border-blue-300 hover:shadow-xl bg-white"
+                    ? "border-red-500 shadow-2xl scale-105 bg-red-50"
+                    : "border-gray-200 hover:border-red-300 hover:shadow-xl bg-white"
                 } animate-fade-in-up`}
                 style={{ animationDelay: `${index * 0.05}s` }}
                 onMouseEnter={() => setHoveredService(index)}
                 onMouseLeave={() => setHoveredService(null)}
               >
-                <div className={`h-1 bg-gradient-to-r from-blue-600 to-blue-700 transition-all duration-500 ${
+                <div className={`h-1 bg-gradient-to-r from-red-600 to-red-700 transition-all duration-500 ${
                   hoveredService === index ? "h-2" : ""
                 }`}></div>
                 <CardHeader className="pb-4">
@@ -145,13 +212,13 @@ const Services = () => {
                   }`}>
                     <div className={`p-4 rounded-2xl transition-all duration-500 ${
                       hoveredService === index
-                        ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-xl"
-                        : "bg-blue-50 text-blue-600"
+                        ? "bg-gradient-to-br from-red-600 to-red-700 text-white shadow-xl"
+                        : "bg-red-50 text-red-600"
                     }`}>
                       {iconFor(service.title)}
                     </div>
                   </div>
-                  <CardTitle className="text-xl font-bold text-gray-900 text-center mb-2 group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-xl font-bold text-gray-900 text-center mb-2 group-hover:text-red-600 transition-colors">
                     {service.title}
                   </CardTitle>
                   <p className="text-gray-600 text-center text-sm">
@@ -164,7 +231,7 @@ const Services = () => {
                     {(service.features || []).slice(0, 3).map((feature, idx) => (
                       <li key={idx} className="flex items-center text-sm text-gray-600">
                         <CheckCircle className={`h-4 w-4 mr-2 flex-shrink-0 transition-colors ${
-                          hoveredService === index ? "text-blue-600" : "text-gray-400"
+                          hoveredService === index ? "text-red-600" : "text-gray-400"
                         }`} />
                         {feature}
                       </li>
@@ -173,7 +240,7 @@ const Services = () => {
 
                   <div className="border-t border-gray-100 pt-4">
                     <p className={`text-sm font-semibold mb-3 text-center transition-colors ${
-                      hoveredService === index ? "text-blue-600" : "text-gray-600"
+                      hoveredService === index ? "text-red-600" : "text-gray-600"
                     }`}>
                       {service.availability || "Available"}
                     </p>
@@ -181,8 +248,8 @@ const Services = () => {
                       <Button
                         className={`w-full transition-all transform ${
                           hoveredService === index
-                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white scale-105"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
+                            ? "bg-gradient-to-r from-red-600 to-red-700 text-white scale-105"
+                            : "bg-red-600 hover:bg-red-700 text-white"
                         }`}
                       >
                         Request Service
@@ -203,8 +270,8 @@ const Services = () => {
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-block bg-blue-50 px-4 py-2 rounded-full mb-4">
-              <span className="text-sm font-semibold text-blue-600">HOW IT WORKS</span>
+            <div className="inline-block bg-red-50 px-4 py-2 rounded-full mb-4">
+              <span className="text-sm font-semibold text-red-600">HOW IT WORKS</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Simple Process
@@ -220,8 +287,8 @@ const Services = () => {
                 key={index}
                 className={`text-center bg-white p-8 rounded-2xl shadow-lg transition-all duration-500 cursor-pointer border-2 ${
                   hoveredStep === index
-                    ? "border-blue-500 shadow-2xl scale-110 bg-blue-50"
-                    : "border-gray-200 hover:border-blue-300 hover:shadow-xl"
+                    ? "border-red-500 shadow-2xl scale-110 bg-red-50"
+                    : "border-gray-200 hover:border-red-300 hover:shadow-xl"
                 } animate-fade-in-up`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 onMouseEnter={() => setHoveredStep(index)}
@@ -230,21 +297,21 @@ const Services = () => {
                 <div className="relative mb-6">
                   <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto text-2xl font-bold transition-all duration-500 ${
                     hoveredStep === index
-                      ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-xl scale-110"
-                      : "bg-blue-600 text-white"
+                      ? "bg-gradient-to-br from-red-600 to-red-700 text-white shadow-xl scale-110"
+                      : "bg-red-600 text-white"
                   }`}>
                     {item.step}
                   </div>
                   {index < process.length - 1 && (
                     <div className="hidden lg:block absolute top-10 left-full w-full h-1 bg-gray-200 -translate-x-8">
                       <div className={`absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full transition-all duration-500 ${
-                        hoveredStep === index ? "bg-blue-600 scale-150" : "bg-gray-300"
+                        hoveredStep === index ? "bg-red-600 scale-150" : "bg-gray-300"
                       }`} />
                     </div>
                   )}
                 </div>
                 <h3 className={`text-xl font-bold mb-3 transition-colors ${
-                  hoveredStep === index ? "text-blue-600" : "text-gray-900"
+                  hoveredStep === index ? "text-red-600" : "text-gray-900"
                 }`}>
                   {item.title}
                 </h3>
@@ -253,7 +320,7 @@ const Services = () => {
                 </p>
                 {hoveredStep === index && (
                   <div className="mt-4 flex justify-center">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping"></div>
+                    <div className="w-2 h-2 bg-red-600 rounded-full animate-ping"></div>
                   </div>
                 )}
               </div>
@@ -263,7 +330,7 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "1.5s" }}></div>
@@ -276,14 +343,14 @@ const Services = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Need Emergency Towing?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-red-100 mb-8">
             Don't wait! Call us now for immediate 24/7 assistance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               asChild
               size="lg"
-              className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-10 py-6 font-semibold shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
+              className="bg-yellow-400 text-red-600 hover:bg-yellow-300 text-lg px-10 py-6 font-semibold shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
             >
               <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
                 <Phone className="mr-2 h-6 w-6" />
@@ -293,8 +360,7 @@ const Services = () => {
             <Button
               asChild
               size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white/10 text-lg px-10 py-6 font-semibold"
+              className="bg-white text-red-600 hover:bg-red-50 border-2 border-white text-lg px-10 py-6 font-semibold shadow-xl hover:shadow-2xl transition-all"
             >
               <Link to="/contacto" className="flex items-center justify-center">
                 Request Service Online

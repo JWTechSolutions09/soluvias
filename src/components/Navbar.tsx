@@ -28,10 +28,11 @@ const Navbar = () => {
             className="flex items-center space-x-3 group"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-blue-500/20 rounded-lg blur-sm group-hover:blur-md transition-all"></div>
-              <div className="relative bg-gradient-to-br from-blue-600 to-blue-700 p-2 rounded-lg">
-                <Truck className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-              </div>
+              <img
+                src="/images/Logo.png"
+                alt="Int Town Services Logo"
+                className="h-12 w-12 sm:h-16 sm:w-16 object-contain drop-shadow-lg"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
@@ -51,8 +52,8 @@ const Navbar = () => {
                 to={item.path}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive(item.path)
-                    ? "bg-blue-50 text-blue-600 font-semibold"
-                    : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                    ? "bg-red-50 text-red-600 font-semibold"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-red-600"
                 }`}
               >
                 {item.name}
@@ -64,7 +65,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center space-x-3 ml-6">
             <Button
               asChild
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <a href={`tel:${brand.phoneE164}`} className="flex items-center">
                 <Phone className="mr-2 h-4 w-4" />
@@ -97,7 +98,7 @@ const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                   className={`px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     isActive(item.path)
-                      ? "bg-blue-50 text-blue-600 font-semibold"
+                      ? "bg-red-50 text-red-600 font-semibold"
                       : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
@@ -106,7 +107,7 @@ const Navbar = () => {
               ))}
               <Button
                 asChild
-                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white w-full py-3 font-semibold"
+                className="mt-4 bg-red-600 hover:bg-red-700 text-white w-full py-3 font-semibold"
                 onClick={() => setIsOpen(false)}
               >
                 <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">

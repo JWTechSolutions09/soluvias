@@ -80,8 +80,8 @@ const Contact = () => {
       title: "Send Email",
       subtitle: "We reply fast",
       action: `mailto:${brand.email}`,
-      color: "from-blue-500 to-blue-600",
-      hoverColor: "hover:from-blue-600 hover:to-blue-700",
+      color: "from-red-500 to-red-600",
+      hoverColor: "hover:from-red-600 hover:to-red-700",
     },
   ];
 
@@ -216,25 +216,80 @@ const Contact = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Navbar />
 
-      {/* Hero Section - Minimalist */}
+      {/* Hero Section - Minimalist with Images */}
       <section className="relative py-16 bg-white overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 opacity-5">
+          <img
+            src="/images/Camion Luces.jpg"
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-50 animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <Truck className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-600">GET IN TOUCH</span>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-center md:text-left">
+              <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full mb-6">
+                <Truck className="h-5 w-5 text-red-600" />
+                <span className="text-sm font-semibold text-red-600">GET IN TOUCH</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                We're Here to Help
+              </h1>
+              <p className="text-xl text-gray-600">
+                Choose your preferred way to contact us. We're available 24/7 for emergency towing services.
+              </p>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              We're Here to Help
-            </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Choose your preferred way to contact us. We're available 24/7 for emergency towing services.
-            </p>
+            
+            {/* Hero Images */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up">
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camion choquecrv.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camiion carretera.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camion parqueado.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+                <div className="aspect-square">
+                  <img
+                    src="/images/Camion lluvia.jpg"
+                    alt="Towing service"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -256,7 +311,7 @@ const Contact = () => {
                     {action.icon}
                   </div>
                   <h3 className="text-2xl font-bold mb-2">{action.title}</h3>
-                  <p className="text-blue-100">{action.subtitle}</p>
+                  <p className="text-red-100">{action.subtitle}</p>
                   <ArrowRight className="h-5 w-5 mt-4 transform group-hover:translate-x-2 transition-transform" />
                 </div>
               </a>
@@ -278,8 +333,8 @@ const Contact = () => {
                     key={index}
                     className={`border-2 transition-all duration-300 cursor-pointer ${
                       hoveredContact === index
-                        ? "border-blue-500 shadow-xl scale-105 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300 hover:shadow-lg"
+                        ? "border-red-500 shadow-xl scale-105 bg-red-50"
+                        : "border-gray-200 hover:border-red-300 hover:shadow-lg"
                     } bg-white animate-fade-in-up`}
                     style={{ animationDelay: `${info.delay}s` }}
                     onMouseEnter={() => setHoveredContact(index)}
@@ -288,7 +343,7 @@ const Contact = () => {
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
                         <div className={`p-3 rounded-xl transition-all duration-300 ${
-                          hoveredContact === index ? "bg-blue-600 text-white scale-110" : "bg-blue-50 text-blue-600"
+                          hoveredContact === index ? "bg-red-600 text-white scale-110" : "bg-red-50 text-red-600"
                         }`}>
                           {info.icon}
                         </div>
@@ -296,7 +351,7 @@ const Contact = () => {
                           <h3 className="font-bold text-gray-900 mb-1">{info.title}</h3>
                           <p className="text-gray-600 text-sm mb-1">{info.subtitle}</p>
                           {info.href ? (
-                            <a href={info.href} className="text-blue-600 font-semibold hover:underline">
+                            <a href={info.href} className="text-red-600 font-semibold hover:underline">
                               {info.value}
                             </a>
                           ) : (
@@ -309,7 +364,7 @@ const Contact = () => {
                 ))}
 
                 {/* Why Choose Us - Moved Here */}
-                <Card className="mt-8 border-2 border-gray-200 bg-gradient-to-br from-blue-50 to-white">
+                <Card className="mt-8 border-2 border-gray-200 bg-gradient-to-br from-red-50 to-white">
                   <CardHeader>
                     <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
                       <Star className="h-5 w-5 text-yellow-500" />
@@ -325,7 +380,7 @@ const Contact = () => {
                         "All vehicle types",
                       ].map((item, index) => (
                         <li key={index} className="flex items-center text-sm text-gray-700">
-                          <CheckCircle className="h-4 w-4 mr-2 text-blue-600 flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 mr-2 text-red-600 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
@@ -338,7 +393,7 @@ const Contact = () => {
             {/* Right Column - Form with Progress Indicator */}
             <div className="lg:col-span-2">
               <Card className="border-2 border-gray-200 shadow-2xl bg-white overflow-hidden">
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
+                <div className="bg-gradient-to-r from-red-600 to-red-700 p-6 text-white">
                   <div className="flex items-center justify-between mb-2">
                     <CardTitle className="text-2xl font-bold">Request Service</CardTitle>
                     <div className="text-sm font-semibold">{Math.round(formProgress)}% Complete</div>
@@ -370,11 +425,11 @@ const Contact = () => {
                             required
                             placeholder="John Doe"
                             className={`transition-all duration-300 ${
-                              focusedField === "name" ? "ring-2 ring-blue-500 border-blue-500 scale-[1.02]" : ""
+                              focusedField === "name" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
                             }`}
                           />
                           {focusedField === "name" && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-ping"></div>
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
                           )}
                         </div>
                       </div>
@@ -395,11 +450,11 @@ const Contact = () => {
                             required
                             placeholder="john@example.com"
                             className={`transition-all duration-300 ${
-                              focusedField === "email" ? "ring-2 ring-blue-500 border-blue-500 scale-[1.02]" : ""
+                              focusedField === "email" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
                             }`}
                           />
                           {focusedField === "email" && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-ping"></div>
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
                           )}
                         </div>
                       </div>
@@ -419,7 +474,7 @@ const Contact = () => {
                           onBlur={() => setFocusedField(null)}
                           placeholder={brand.phoneDisplay}
                           className={`transition-all duration-300 ${
-                            focusedField === "phone" ? "ring-2 ring-blue-500 border-blue-500 scale-[1.02]" : ""
+                            focusedField === "phone" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
                           }`}
                         />
                       </div>
@@ -437,7 +492,7 @@ const Contact = () => {
                           onBlur={() => setFocusedField(null)}
                           placeholder="Optional"
                           className={`transition-all duration-300 ${
-                            focusedField === "company" ? "ring-2 ring-blue-500 border-blue-500 scale-[1.02]" : ""
+                            focusedField === "company" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
                           }`}
                         />
                       </div>
@@ -455,7 +510,7 @@ const Contact = () => {
                         onFocus={() => setFocusedField("service")}
                         onBlur={() => setFocusedField(null)}
                         className={`w-full px-4 py-3 border-2 rounded-lg bg-white text-gray-900 focus:outline-none transition-all duration-300 ${
-                          focusedField === "service" ? "ring-2 ring-blue-500 border-blue-500" : "border-gray-300"
+                          focusedField === "service" ? "ring-2 ring-red-500 border-red-500" : "border-gray-300"
                         }`}
                       >
                         <option value="">Select a service</option>
@@ -495,7 +550,7 @@ const Contact = () => {
 
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -518,15 +573,15 @@ const Contact = () => {
               <Card className="mt-8 border-2 border-gray-200 shadow-lg bg-white overflow-hidden">
                 <CardContent className="p-0">
                   <a href={mapsUrl} target="_blank" rel="noreferrer" className="block group">
-                    <div className="relative h-64 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center overflow-hidden">
+                    <div className="relative h-64 bg-gradient-to-br from-red-100 to-yellow-100 flex items-center justify-center overflow-hidden">
                       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNjZjYyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
                       <div className="relative z-10 text-center p-6 transform group-hover:scale-110 transition-transform duration-300">
                         <div className="bg-white p-4 rounded-full inline-block mb-4 shadow-lg group-hover:shadow-2xl transition-shadow">
-                          <MapPin className="h-12 w-12 text-blue-600" />
+                          <MapPin className="h-12 w-12 text-red-600" />
                         </div>
                         <p className="text-gray-900 font-bold text-lg mb-2">View Our Location</p>
                         <p className="text-gray-600 text-sm">{brand.address}</p>
-                        <p className="text-blue-600 text-xs mt-3 font-semibold">Click to open in Google Maps →</p>
+                        <p className="text-red-600 text-xs mt-3 font-semibold">Click to open in Google Maps →</p>
                       </div>
                     </div>
                   </a>
@@ -538,7 +593,7 @@ const Contact = () => {
       </section>
 
       {/* Bottom CTA - Enhanced */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "1.5s" }}></div>
@@ -551,14 +606,14 @@ const Contact = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Need Immediate Assistance?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
             Don't wait! Our team is standing by 24/7 to help you get back on the road.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               asChild
               size="lg"
-              className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-10 py-6 font-semibold shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
+              className="bg-yellow-400 text-red-600 hover:bg-yellow-300 text-lg px-10 py-6 font-semibold shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
             >
               <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
                 <Phone className="mr-2 h-6 w-6" />
