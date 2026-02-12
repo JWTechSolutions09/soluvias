@@ -234,8 +234,8 @@ const Index = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a8a]/80 via-[#1e3a8a]/20 to-transparent"></div>
                 </div>
 
-                {/* Video Thumbnail Overlay */}
-                <div className="absolute bottom-8 left-8 right-8">
+                {/* Video Thumbnail Overlay - Temporarily disabled due to file size limits */}
+                {/* <div className="absolute bottom-8 left-8 right-8">
                   <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex items-center gap-4 cursor-pointer hover:bg-white transition-all group"
                     onClick={() => setIsVideoPlaying(true)}>
                     <div className="bg-[#1e3a8a] rounded-full p-3 group-hover:scale-110 transition-transform">
@@ -246,15 +246,15 @@ const Index = () => {
                       <p className="text-sm text-gray-600">See our projects in action</p>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Video Modal */}
-      {isVideoPlaying && (
+      {/* Video Modal - Temporarily disabled due to file size limits */}
+      {/* {isVideoPlaying && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 animate-fade-in-up"
           onClick={() => setIsVideoPlaying(false)}>
           <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
@@ -274,7 +274,7 @@ const Index = () => {
             </video>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Services Grid Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">

@@ -1,0 +1,6 @@
+# Cloudflare Pages ignore file
+# Exclude video files from deployment (too large - max 25MB per file)
+
+public/images/video*.mp4
+public/images/*.mp4
+**/*.mp4

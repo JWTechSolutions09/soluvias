@@ -99,15 +99,15 @@ const Projects = () => {
     { id: "living-room2", title: "Living Room2", category: "Home Improvement", status: "Completed", year: "2024", image: "/images/Living Room2.jpeg", type: "image" },
   ];
 
-  // Video items
+  // Video items - Temporarily disabled due to file size limits (Cloudflare Pages max 25MB per file)
   const videoItems: GalleryItem[] = [
-    { id: "video-1", title: "video 1", category: "All", status: "Completed", year: "2024", image: "/images/video 1.mp4", type: "video" },
-    { id: "video-2", title: "video 2", category: "All", status: "Completed", year: "2024", image: "/images/video 2.mp4", type: "video" },
-    { id: "video-3", title: "video 3", category: "All", status: "Completed", year: "2024", image: "/images/video 3.mp4", type: "video" },
-    { id: "video-4", title: "video 4", category: "All", status: "Completed", year: "2024", image: "/images/video 4.mp4", type: "video" },
-    { id: "video-5", title: "video 5", category: "All", status: "Completed", year: "2024", image: "/images/video 5.mp4", type: "video" },
-    { id: "video-6", title: "video 6", category: "All", status: "Completed", year: "2024", image: "/images/video 6.mp4", type: "video" },
-    { id: "video-7", title: "video 7", category: "All", status: "Completed", year: "2024", image: "/images/video 7.mp4", type: "video" },
+    // { id: "video-1", title: "video 1", category: "All", status: "Completed", year: "2024", image: "/images/video 1.mp4", type: "video" },
+    // { id: "video-2", title: "video 2", category: "All", status: "Completed", year: "2024", image: "/images/video 2.mp4", type: "video" },
+    // { id: "video-3", title: "video 3", category: "All", status: "Completed", year: "2024", image: "/images/video 3.mp4", type: "video" },
+    // { id: "video-4", title: "video 4", category: "All", status: "Completed", year: "2024", image: "/images/video 4.mp4", type: "video" },
+    // { id: "video-5", title: "video 5", category: "All", status: "Completed", year: "2024", image: "/images/video 5.mp4", type: "video" },
+    // { id: "video-6", title: "video 6", category: "All", status: "Completed", year: "2024", image: "/images/video 6.mp4", type: "video" },
+    // { id: "video-7", title: "video 7", category: "All", status: "Completed", year: "2024", image: "/images/video 7.mp4", type: "video" },
   ];
 
   // Combine all items in the order shown in the image (logo removed)
