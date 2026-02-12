@@ -1,6 +1,13 @@
-import { useMemo, useState, useEffect, useRef } from "react";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, MessageSquare, Truck, Zap, Shield, Star, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useEffect, useRef } from "react";
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, MessageSquare, Home, ArrowRight, Sparkles, Star, Award } from "lucide-react";
+
+// WhatsApp Icon Component
+const WhatsAppIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+  </svg>
+);
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,19 +23,38 @@ const Contact = () => {
     name: "",
     email: "",
     phone: "",
-    company: "",
     service: "",
     message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [hoveredContact, setHoveredContact] = useState<number | null>(null);
-  const [formProgress, setFormProgress] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Initialize EmailJS
+  const heroImages = [
+    "/images/House Work7.jpeg",
+    "/images/Kitchen Work 2.jpeg",
+    "/images/Bathroom Work2.jpeg",
+    "/images/Living Room.jpeg",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   useEffect(() => {
     try {
       if (emailjsConfig.publicKey && emailjsConfig.publicKey !== "YOUR_PUBLIC_KEY") {
@@ -39,172 +65,45 @@ const Contact = () => {
     }
   }, []);
 
-  // Calculate form progress
-  useEffect(() => {
-    const fields = ['name', 'email', 'phone', 'service', 'message'];
-    const filledFields = fields.filter(field => {
-      const value = formData[field as keyof typeof formData];
-      return value && value.trim() !== '';
-    }).length;
-    setFormProgress((filledFields / fields.length) * 100);
-  }, [formData]);
-
-  const services = useMemo(() => {
-    return [...(brand.services || []), "Other"];
-  }, []);
-
-  const mapsUrl = useMemo(() => {
-    const q = encodeURIComponent(brand.mapsQuery || brand.address || brand.name);
-    return `https://www.google.com/maps/search/?api=1&query=${q}`;
-  }, []);
-
-  const quickActions = [
-    {
-      icon: <Phone className="h-8 w-8" />,
-      title: "Emergency Call",
-      subtitle: "24/7 Available",
-      action: `tel:${brand.phoneE164}`,
-      color: "from-red-500 to-red-600",
-      hoverColor: "hover:from-red-600 hover:to-red-700",
-    },
-    {
-      icon: <MessageSquare className="h-8 w-8" />,
-      title: "Quick Message",
-      subtitle: "WhatsApp Available",
-      action: "#form",
-      color: "from-green-500 to-green-600",
-      hoverColor: "hover:from-green-600 hover:to-green-700",
-    },
-    {
-      icon: <Mail className="h-8 w-8" />,
-      title: "Send Email",
-      subtitle: "We reply fast",
-      action: `mailto:${brand.email}`,
-      color: "from-red-500 to-red-600",
-      hoverColor: "hover:from-red-600 hover:to-red-700",
-    },
-  ];
-
-  const contactInfo = [
-    {
-      icon: <Phone className="h-6 w-6" />,
-      title: "Phone",
-      value: brand.phoneDisplay,
-      subtitle: "24/7 Emergency Service",
-      href: `tel:${brand.phoneE164}`,
-      delay: 0,
-    },
-    {
-      icon: <Mail className="h-6 w-6" />,
-      title: "Email",
-      value: brand.email,
-      subtitle: "Quick Response",
-      href: `mailto:${brand.email}`,
-      delay: 0.1,
-    },
-    {
-      icon: <MapPin className="h-6 w-6" />,
-      title: "Location",
-      value: brand.address,
-      subtitle: "Boston, MA",
-      href: mapsUrl,
-      delay: 0.2,
-    },
-    {
-      icon: <Clock className="h-6 w-6" />,
-      title: "Hours",
-      value: "24/7",
-      subtitle: "Always Available",
-      href: "",
-      delay: 0.3,
-    },
-  ];
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      if (!emailjsConfig.publicKey || emailjsConfig.publicKey === "YOUR_PUBLIC_KEY") {
-        throw new Error("EmailJS is not configured.");
-      }
-      
-      if (!emailjsConfig.serviceId || emailjsConfig.serviceId === "YOUR_SERVICE_ID") {
-        throw new Error("EmailJS Service ID is not configured.");
-      }
-      
-      if (!emailjsConfig.templateId || emailjsConfig.templateId === "YOUR_TEMPLATE_ID") {
-        throw new Error("EmailJS Template ID is not configured.");
-      }
+      if (emailjsConfig.serviceId && emailjsConfig.templateId && emailjsConfig.publicKey) {
+        await emailjs.send(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            phone: formData.phone,
+            service: formData.service,
+            message: formData.message,
+            to_name: brand.name,
+          },
+          emailjsConfig.publicKey
+        );
 
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        user_name: formData.name,
-        user_email: formData.email,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || "Not provided",
-        company: formData.company || "Not provided",
-        service: formData.service || "Not specified",
-        message: formData.message,
-        to_email: emailjsConfig.toEmail,
-        reply_to: formData.email,
-      };
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you soon.",
+        });
 
-      await emailjs.send(
-        emailjsConfig.serviceId,
-        emailjsConfig.templateId,
-        templateParams
-      );
-
-      if (emailjsConfig.autoReplyTemplateId && formData.email) {
-        try {
-          await emailjs.send(
-            emailjsConfig.serviceId,
-            emailjsConfig.autoReplyTemplateId,
-            {
-              to_name: formData.name,
-              to_email: formData.email,
-              user_name: formData.name,
-              user_email: formData.email,
-              service: formData.service || "your inquiry",
-            }
-          );
-        } catch (autoReplyError) {
-          console.warn("Auto-reply failed:", autoReplyError);
-        }
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+      } else {
+        throw new Error("EmailJS not configured");
       }
-
+    } catch (error) {
       toast({
-        title: "Message sent!",
-        description: "We'll contact you soon at " + formData.email,
-      });
-
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        service: "",
-        message: "",
-      });
-      setFormProgress(0);
-    } catch (error: any) {
-      const errorMessage = error?.text || error?.message || "Unknown error occurred";
-      toast({
-        title: "Error sending message",
-        description: errorMessage + ". Please try again or call us directly.",
+        title: "Error",
+        description: "Failed to send message. Please try again or call us directly.",
         variant: "destructive",
       });
     } finally {
@@ -212,414 +111,428 @@ const Contact = () => {
     }
   };
 
+  const contactInfo = [
+    {
+      icon: <Phone className="h-6 w-6" />,
+      title: "Phone",
+      content: brand.phoneDisplay,
+      link: `tel:${brand.phoneE164}`,
+      color: "from-[#1e3a8a] to-[#1e40af]",
+    },
+    {
+      icon: <Mail className="h-6 w-6" />,
+      title: "Email",
+      content: brand.email,
+      link: `mailto:${brand.email}`,
+      color: "from-[#fbbf24] to-[#f59e0b]",
+    },
+    {
+      icon: <WhatsAppIcon className="h-6 w-6" />,
+      title: "WhatsApp",
+      content: brand.phoneDisplay,
+      link: `https://wa.me/${brand.phoneE164.replace(/\+/g, '')}`,
+      color: "from-[#25D366] to-[#128C7E]",
+    },
+    {
+      icon: <MapPin className="h-6 w-6" />,
+      title: "Location",
+      content: brand.address,
+      link: `https://maps.google.com/?q=${encodeURIComponent(brand.mapsQuery)}`,
+      color: "from-[#1e3a8a] to-[#1e40af]",
+    },
+    {
+      icon: <Clock className="h-6 w-6" />,
+      title: "Hours",
+      content: brand.hours?.[0] || "Mon-Fri: 8AM-6PM",
+      link: "#",
+      color: "from-[#fbbf24] to-[#f59e0b]",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section - Minimalist with Images */}
-      <section className="relative py-16 bg-white overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 opacity-5">
-          <img
-            src="/images/Camion Luces.jpg"
-            alt="Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
+      {/* Hero Section */}
+      <section
+        className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-br from-[#1e3a8a] via-[#1e40af] to-[#1e3a8a] overflow-hidden"
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+        }}
+      >
+        {/* Animated Background Images */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-50 animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
+          {heroImages.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Contact ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentImageIndex ? "opacity-30" : "opacity-0"
+                }`}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a]/90 via-[#1e3a8a]/80 to-[#1e40af]/90"></div>
         </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-center md:text-left">
-              <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full mb-6">
-                <Truck className="h-5 w-5 text-red-600" />
-                <span className="text-sm font-semibold text-red-600">GET IN TOUCH</span>
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-                We're Here to Help
-              </h1>
-              <p className="text-xl text-gray-600">
-                Choose your preferred way to contact us. We're available 24/7 for emergency towing services.
-              </p>
-            </div>
-            
-            {/* Hero Images */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up">
-                <div className="aspect-square">
-                  <img
-                    src="/images/Camion choquecrv.jpg"
-                    alt="Towing service"
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  />
+
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] animate-gradient-shift"></div>
+        </div>
+
+        {/* Floating Orbs */}
+        <div
+          className="absolute top-20 right-20 w-96 h-96 bg-[#fbbf24]/20 rounded-full blur-3xl animate-pulse"
+          style={{
+            transform: `translate(${(mousePosition.x - 500) * 0.05}px, ${(mousePosition.y - 300) * 0.05}px)`,
+            transition: "transform 0.3s ease-out"
+          }}
+        ></div>
+        <div
+          className="absolute bottom-20 left-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl animate-bounce-slow"
+          style={{
+            transform: `translate(${(mousePosition.x - 500) * -0.03}px, ${(mousePosition.y - 300) * -0.03}px)`,
+            transition: "transform 0.3s ease-out"
+          }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-[#fbbf24]/5 rounded-full blur-3xl animate-pulse"
+          style={{
+            transform: `translate(calc(-50% + ${(mousePosition.x - 500) * 0.02}px), calc(-50% + ${(mousePosition.y - 300) * 0.02}px))`,
+            transition: "transform 0.3s ease-out"
+          }}
+        ></div>
+
+        {/* Floating Contact Icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[
+            { Icon: Mail, name: "Mail" },
+            { Icon: Phone, name: "Phone" },
+            { Icon: () => <WhatsAppIcon className="h-8 w-8" />, name: "WhatsApp" },
+            { Icon: MessageSquare, name: "Message" }
+          ].map((item, index) => {
+            const animations = [
+              "animate-float-swap",
+              "animate-float-swap-2",
+              "animate-float-swap-3",
+              "animate-float-swap-4"
+            ];
+            const Icon = item.Icon;
+            return (
+              <div
+                key={index}
+                className={`absolute top-1/2 left-1/2 ${animations[index]}`}
+                style={{
+                  animationDelay: `${index * 3.75}s`,
+                  animationDuration: `${15 + index * 2}s`
+                }}
+              >
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-4 border-2 border-[#fbbf24]/30 hover:border-[#fbbf24] transition-all group cursor-pointer">
+                  <Icon className="h-8 w-8 text-white group-hover:text-[#fbbf24] transition-colors" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
-              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-                <div className="aspect-square">
-                  <img
-                    src="/images/Camiion carretera.jpg"
-                    alt="Towing service"
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </div>
-              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-                <div className="aspect-square">
-                  <img
-                    src="/images/Camion parqueado.jpg"
-                    alt="Towing service"
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </div>
-              <div className="relative rounded-xl overflow-hidden shadow-xl group animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-                <div className="aspect-square">
-                  <img
-                    src="/images/Camion lluvia.jpg"
-                    alt="Towing service"
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </div>
-            </div>
+            );
+          })}
+        </div>
+
+        {/* Main Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-block mb-6 animate-fade-in-up">
+            <span className="bg-[#fbbf24] text-[#1e3a8a] px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wide animate-pulse-glow-yellow shadow-lg">
+              Contact Us
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            Get In Touch
+            <br />
+            <span className="text-[#fbbf24] relative inline-block">
+              With Us
+              <div className="absolute -bottom-2 left-0 w-full h-3 bg-[#fbbf24]/30 -z-10 transform rotate-[-2deg]"></div>
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            {brand.contactSubtitle}
+          </p>
+          <div className="w-24 h-1 bg-[#fbbf24] mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: "0.3s" }}></div>
+
+          {/* Image Indicators */}
+          <div className="flex justify-center gap-2 mt-8 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${index === currentImageIndex ? "w-8 bg-[#fbbf24]" : "w-2 bg-white/30 hover:bg-white/50"
+                  }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2"></div>
           </div>
         </div>
       </section>
 
-      {/* Quick Action Buttons - New Interactive Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6">
-            {quickActions.map((action, index) => (
-              <a
+      {/* Contact Info Cards */}
+      <section className="py-12 bg-gray-50 -mt-10 relative z-10 overflow-hidden">
+        {/* Floating Contact Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-particle-float"
+              style={{
+                left: `${(i * 12.5) % 100}%`,
+                top: `${(i * 15) % 100}%`,
+                animationDelay: `${i * 0.7}s`,
+                animationDuration: `${9 + (i % 3) * 1.5}s`
+              }}
+            >
+              <div className="text-[#1e3a8a]/10">
+                {(() => {
+                  const IconComponent = [Mail, Phone, MapPin, Clock, MessageSquare, Sparkles, Star, Award][i % 8];
+                  return IconComponent ? <IconComponent className={`h-5 w-5 ${i % 3 === 0 ? 'animate-sparkle' : i % 3 === 1 ? 'animate-particle-float' : 'animate-tool-rotate'}`} /> : null;
+                })()}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {contactInfo.map((info, index) => (
+              <Card
                 key={index}
-                href={action.action}
-                className={`group relative overflow-hidden bg-gradient-to-br ${action.color} ${action.hoverColor} rounded-2xl p-8 text-white transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate-fade-in-up`}
+                className="border-2 border-gray-200 hover:border-[#1e3a8a] transition-all hover:-translate-y-2 hover:shadow-xl bg-white group relative overflow-hidden animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative z-10">
-                  <div className="mb-4 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
-                    {action.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">{action.title}</h3>
-                  <p className="text-red-100">{action.subtitle}</p>
-                  <ArrowRight className="h-5 w-5 mt-4 transform group-hover:translate-x-2 transition-transform" />
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 animate-shimmer"></div>
                 </div>
-              </a>
+
+                <CardContent className="p-6 text-center relative z-10">
+                  <div className={`bg-gradient-to-br ${info.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 relative`}>
+                    {info.icon}
+                    {/* Pulse Ring */}
+                    <div className="absolute inset-0 rounded-full bg-current opacity-0 group-hover:opacity-50 animate-pulse-ring"></div>
+                    {/* Sparkle */}
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-sparkle opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  </div>
+                  <h3 className="text-lg font-bold text-[#1e3a8a] mb-2 group-hover:text-[#fbbf24] transition-colors">{info.title}</h3>
+                  <a
+                    href={info.link}
+                    className="text-gray-600 hover:text-[#1e3a8a] transition-colors block group-hover:font-semibold"
+                  >
+                    {info.content}
+                  </a>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Main Content - Reordered Layout */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Left Column - Contact Info Cards with Hover Effects */}
-            <div className="lg:col-span-1 space-y-6">
-              <div className="sticky top-24">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
-                {contactInfo.map((info, index) => (
-                  <Card
-                    key={index}
-                    className={`border-2 transition-all duration-300 cursor-pointer ${
-                      hoveredContact === index
-                        ? "border-red-500 shadow-xl scale-105 bg-red-50"
-                        : "border-gray-200 hover:border-red-300 hover:shadow-lg"
-                    } bg-white animate-fade-in-up`}
-                    style={{ animationDelay: `${info.delay}s` }}
-                    onMouseEnter={() => setHoveredContact(index)}
-                    onMouseLeave={() => setHoveredContact(null)}
-                  >
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className={`p-3 rounded-xl transition-all duration-300 ${
-                          hoveredContact === index ? "bg-red-600 text-white scale-110" : "bg-red-50 text-red-600"
-                        }`}>
-                          {info.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-gray-900 mb-1">{info.title}</h3>
-                          <p className="text-gray-600 text-sm mb-1">{info.subtitle}</p>
-                          {info.href ? (
-                            <a href={info.href} className="text-red-600 font-semibold hover:underline">
-                              {info.value}
-                            </a>
-                          ) : (
-                            <p className="text-gray-900 font-semibold">{info.value}</p>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+      {/* Contact Form Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Left Side - Form */}
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a] mb-6">
+                Send Us a Message
+              </h2>
+              <p className="text-gray-600 mb-8">
+                Fill out the form below and we'll get back to you as soon as possible.
+              </p>
 
-                {/* Why Choose Us - Moved Here */}
-                <Card className="mt-8 border-2 border-gray-200 bg-gradient-to-br from-red-50 to-white">
-                  <CardHeader>
-                    <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                      <Star className="h-5 w-5 text-yellow-500" />
-                      Why Choose Us
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      {[
-                        "24/7 emergency service",
-                        "15-30 min response time",
-                        "Licensed operators",
-                        "All vehicle types",
-                      ].map((item, index) => (
-                        <li key={index} className="flex items-center text-sm text-gray-700">
-                          <CheckCircle className="h-4 w-4 mr-2 text-red-600 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            {/* Right Column - Form with Progress Indicator */}
-            <div className="lg:col-span-2">
-              <Card className="border-2 border-gray-200 shadow-2xl bg-white overflow-hidden">
-                <div className="bg-gradient-to-r from-red-600 to-red-700 p-6 text-white">
-                  <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-2xl font-bold">Request Service</CardTitle>
-                    <div className="text-sm font-semibold">{Math.round(formProgress)}% Complete</div>
-                  </div>
-                  {/* Progress Bar */}
-                  <div className="w-full bg-white/20 rounded-full h-2 mt-4">
-                    <div
-                      className="bg-white h-2 rounded-full transition-all duration-500 ease-out"
-                      style={{ width: `${formProgress}%` }}
-                    ></div>
-                  </div>
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <Label htmlFor="name" className="text-[#1e3a8a] font-semibold">
+                    Name *
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="mt-2 border-2 border-gray-200 focus:border-[#1e3a8a]"
+                    placeholder="Your name"
+                  />
                 </div>
 
-                <CardContent className="p-8">
-                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="name" className="text-gray-700 font-semibold">
-                          Full Name *
-                        </Label>
-                        <div className="relative">
-                          <Input
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            onFocus={() => setFocusedField("name")}
-                            onBlur={() => setFocusedField(null)}
-                            required
-                            placeholder="John Doe"
-                            className={`transition-all duration-300 ${
-                              focusedField === "name" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
-                            }`}
-                          />
-                          {focusedField === "name" && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
-                          )}
-                        </div>
-                      </div>
+                <div>
+                  <Label htmlFor="email" className="text-[#1e3a8a] font-semibold">
+                    Email *
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="mt-2 border-2 border-gray-200 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#fbbf24]/50 transition-all hover:border-[#1e3a8a]/50"
+                    placeholder="your@email.com"
+                  />
+                </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="text-gray-700 font-semibold">
-                          Email *
-                        </Label>
-                        <div className="relative">
-                          <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            onFocus={() => setFocusedField("email")}
-                            onBlur={() => setFocusedField(null)}
-                            required
-                            placeholder="john@example.com"
-                            className={`transition-all duration-300 ${
-                              focusedField === "email" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
-                            }`}
-                          />
-                          {focusedField === "email" && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                <div>
+                  <Label htmlFor="phone" className="text-[#1e3a8a] font-semibold">
+                    Phone
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="mt-2 border-2 border-gray-200 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#fbbf24]/50 transition-all hover:border-[#1e3a8a]/50"
+                    placeholder="(407) 555-0123"
+                  />
+                </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-gray-700 font-semibold">
-                          Phone
-                        </Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          onFocus={() => setFocusedField("phone")}
-                          onBlur={() => setFocusedField(null)}
-                          placeholder={brand.phoneDisplay}
-                          className={`transition-all duration-300 ${
-                            focusedField === "phone" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
-                          }`}
-                        />
-                      </div>
+                <div>
+                  <Label htmlFor="service" className="text-[#1e3a8a] font-semibold">
+                    Service Interested In
+                  </Label>
+                  <Input
+                    id="service"
+                    type="text"
+                    value={formData.service}
+                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                    className="mt-2 border-2 border-gray-200 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#fbbf24]/50 transition-all hover:border-[#1e3a8a]/50"
+                    placeholder="Kitchen Remodeling, Bathroom, etc."
+                  />
+                </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="company" className="text-gray-700 font-semibold">
-                          Insurance / Company
-                        </Label>
-                        <Input
-                          id="company"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleInputChange}
-                          onFocus={() => setFocusedField("company")}
-                          onBlur={() => setFocusedField(null)}
-                          placeholder="Optional"
-                          className={`transition-all duration-300 ${
-                            focusedField === "company" ? "ring-2 ring-red-500 border-red-500 scale-[1.02]" : ""
-                          }`}
-                        />
-                      </div>
-                    </div>
+                <div>
+                  <Label htmlFor="message" className="text-[#1e3a8a] font-semibold">
+                    Message *
+                  </Label>
+                  <Textarea
+                    id="message"
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="mt-2 border-2 border-gray-200 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#fbbf24]/50 transition-all hover:border-[#1e3a8a]/50 min-h-[150px]"
+                    placeholder="Tell us about your project..."
+                  />
+                </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="service" className="text-gray-700 font-semibold">
-                        Service Needed
-                      </Label>
-                      <select
-                        id="service"
-                        name="service"
-                        value={formData.service}
-                        onChange={handleInputChange}
-                        onFocus={() => setFocusedField("service")}
-                        onBlur={() => setFocusedField(null)}
-                        className={`w-full px-4 py-3 border-2 rounded-lg bg-white text-gray-900 focus:outline-none transition-all duration-300 ${
-                          focusedField === "service" ? "ring-2 ring-red-500 border-red-500" : "border-gray-300"
-                        }`}
-                      >
-                        <option value="">Select a service</option>
-                        {services.map((s, idx) => (
-                          <option key={idx} value={s}>
-                            {s}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Label htmlFor="message" className="text-gray-700 font-semibold">
-                          Message *
-                        </Label>
-                        <span className="text-sm text-gray-500">
-                          {formData.message.length} / 500
-                        </span>
-                      </div>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        onFocus={() => setFocusedField("message")}
-                        onBlur={() => setFocusedField(null)}
-                        required
-                        rows={6}
-                        maxLength={500}
-                        placeholder="Describe your situation, vehicle details, and location..."
-                        className={`transition-all duration-300 resize-none ${
-                          focusedField === "message" ? "ring-2 ring-blue-500 border-blue-500 scale-[1.01]" : ""
-                        }`}
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center">
-                          <span className="animate-spin mr-2">⏳</span>
-                          Sending...
-                        </span>
-                      ) : (
-                        <span className="flex items-center justify-center">
-                          Send Request
-                          <Send className="ml-2 h-5 w-5" />
-                        </span>
-                      )}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-
-              {/* Map Section - Moved Below Form */}
-              <Card className="mt-8 border-2 border-gray-200 shadow-lg bg-white overflow-hidden">
-                <CardContent className="p-0">
-                  <a href={mapsUrl} target="_blank" rel="noreferrer" className="block group">
-                    <div className="relative h-64 bg-gradient-to-br from-red-100 to-yellow-100 flex items-center justify-center overflow-hidden">
-                      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNjZjYyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20"></div>
-                      <div className="relative z-10 text-center p-6 transform group-hover:scale-110 transition-transform duration-300">
-                        <div className="bg-white p-4 rounded-full inline-block mb-4 shadow-lg group-hover:shadow-2xl transition-shadow">
-                          <MapPin className="h-12 w-12 text-red-600" />
-                        </div>
-                        <p className="text-gray-900 font-bold text-lg mb-2">View Our Location</p>
-                        <p className="text-gray-600 text-sm">{brand.address}</p>
-                        <p className="text-red-600 text-xs mt-3 font-semibold">Click to open in Google Maps →</p>
-                      </div>
-                    </div>
-                  </a>
-                </CardContent>
-              </Card>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-bold py-6 text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105 relative overflow-hidden group/btn"
+                >
+                  {/* Shimmer Effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-700">
+                    <div className="absolute inset-0 animate-shimmer"></div>
+                  </div>
+                  <span className="relative z-10 flex items-center justify-center">
+                    {isSubmitting ? (
+                      "Sending..."
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-5 w-5 group-hover/btn:rotate-12 transition-transform duration-300" />
+                        Send Message
+                      </>
+                    )}
+                  </span>
+                </Button>
+              </form>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Bottom CTA - Enhanced */}
-      <section className="py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "1.5s" }}></div>
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Zap className="h-5 w-5 text-white" />
-            <span className="text-sm font-semibold text-white">EMERGENCY SERVICE</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Need Immediate Assistance?
-          </h2>
-          <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
-            Don't wait! Our team is standing by 24/7 to help you get back on the road.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-yellow-400 text-red-600 hover:bg-yellow-300 text-lg px-10 py-6 font-semibold shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
-            >
-              <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
-                <Phone className="mr-2 h-6 w-6" />
-                CALL NOW: {brand.phoneDisplay}
-              </a>
-            </Button>
+            {/* Right Side - Info */}
+            <div className="space-y-8">
+              <Card className="border-2 border-[#fbbf24] bg-gradient-to-br from-[#fbbf24]/10 to-white group relative overflow-hidden">
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#fbbf24]/0 via-[#fbbf24]/5 to-[#fbbf24]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <CardContent className="p-8 relative z-10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-[#1e3a8a] p-3 rounded-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 relative">
+                      <MessageSquare className="h-6 w-6 text-[#fbbf24]" />
+                      <div className="absolute inset-0 rounded-lg bg-[#fbbf24] opacity-0 group-hover:opacity-30 animate-pulse-ring"></div>
+                    </div>
+                    <h3 className="text-2xl font-bold text-[#1e3a8a] group-hover:text-[#fbbf24] transition-colors">
+                      Why Contact Us?
+                    </h3>
+                  </div>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 group/item">
+                      <CheckCircle className="h-5 w-5 text-[#fbbf24] flex-shrink-0 mt-0.5 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300" />
+                      <span className="text-gray-700 group-hover/item:text-[#1e3a8a] group-hover/item:font-semibold transition-all">Schedule ur visit for consultations and estimates</span>
+                    </li>
+                    <li className="flex items-start gap-3 group/item">
+                      <CheckCircle className="h-5 w-5 text-[#fbbf24] flex-shrink-0 mt-0.5 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300" />
+                      <span className="text-gray-700 group-hover/item:text-[#1e3a8a] group-hover/item:font-semibold transition-all">Licensed and insured professionals</span>
+                    </li>
+                    <li className="flex items-start gap-3 group/item">
+                      <CheckCircle className="h-5 w-5 text-[#fbbf24] flex-shrink-0 mt-0.5 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300" />
+                      <span className="text-gray-700 group-hover/item:text-[#1e3a8a] group-hover/item:font-semibold transition-all">Quality workmanship guaranteed</span>
+                    </li>
+                    <li className="flex items-start gap-3 group/item">
+                      <CheckCircle className="h-5 w-5 text-[#fbbf24] flex-shrink-0 mt-0.5 group-hover/item:scale-110 group-hover/item:rotate-12 transition-all duration-300" />
+                      <span className="text-gray-700 group-hover/item:text-[#1e3a8a] group-hover/item:font-semibold transition-all">Serving Boston, MA</span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-[#1e3a8a] bg-white">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-[#1e3a8a] mb-4">
+                    Business Hours
+                  </h3>
+                  <div className="space-y-2">
+                    {brand.hours?.map((hour, index) => (
+                      <div key={index} className="flex items-center gap-2 text-gray-700">
+                        <Clock className="h-4 w-4 text-[#fbbf24]" />
+                        <span>{hour}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="bg-gradient-to-br from-[#1e3a8a] to-[#1e40af] p-8 rounded-2xl text-white">
+                <h3 className="text-2xl font-bold mb-4">Need Immediate Help?</h3>
+                <p className="text-blue-100 mb-6">
+                  Call us now or message us on WhatsApp for urgent home improvement needs
+                </p>
+                <div className="space-y-3">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full bg-[#fbbf24] text-[#1e3a8a] hover:bg-[#f59e0b] font-bold"
+                  >
+                    <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
+                      <Phone className="mr-2 h-5 w-5" />
+                      CALL {brand.phoneDisplay}
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold"
+                  >
+                    <a
+                      href={`https://wa.me/${brand.phoneE164.replace(/\+/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center"
+                    >
+                      <WhatsAppIcon className="mr-2 h-5 w-5" />
+                      WhatsApp Us
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

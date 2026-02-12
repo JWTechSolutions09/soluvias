@@ -1,264 +1,307 @@
-import { useState } from "react";
-import { ArrowRight, CheckCircle, Truck, ShieldCheck, Zap, Battery, Key, Fuel, Wrench, Phone, AlertCircle, MapPin, Clock, Star, Sparkles } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ArrowRight, CheckCircle, Home, Wrench, Paintbrush, Trash2, Sparkles, Phone, Award, Clock, Users, Star, Settings, Building, HardHat, Hammer } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { brand } from "@/config/brand";
 
 const Services = () => {
-  const [searchParams] = useSearchParams();
-  const category = searchParams.get("category") || "all";
   const [hoveredService, setHoveredService] = useState<number | null>(null);
-  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const iconFor = (title: string) => {
-    const iconClass = "h-8 w-8";
-    const map: Record<string, JSX.Element> = {
-      "Emergency Towing": <Truck className={iconClass} />,
-      "Roadside Assistance": <Wrench className={iconClass} />,
-      "Flatbed Towing": <Truck className={iconClass} />,
-      "Heavy Duty Towing": <Truck className={iconClass} />,
-      "Motorcycle Towing": <Truck className={iconClass} />,
-      "Accident Recovery": <AlertCircle className={iconClass} />,
-      "Jump Start Service": <Battery className={iconClass} />,
-      "Tire Change Service": <Wrench className={iconClass} />,
-      "Lockout Service": <Key className={iconClass} />,
-      "Fuel Delivery": <Fuel className={iconClass} />,
-      "Winch Out Service": <Truck className={iconClass} />,
-      "Long Distance Towing": <MapPin className={iconClass} />,
-      "Interstate Transport": <MapPin className={iconClass} />,
-      "Vehicle Storage": <ShieldCheck className={iconClass} />,
-      "Insurance Towing": <ShieldCheck className={iconClass} />,
-    };
-    return map[title] || <Truck className={iconClass} />;
-  };
+  const services = brand.serviceCards || [];
 
-  const allServices = (brand.serviceCards && brand.serviceCards.length > 0)
-    ? brand.serviceCards
-    : (brand.services || []).map((s) => ({
-        title: s,
-        description: "Professional service with quality workmanship and clear communication.",
-        features: ["Quality work", "Clear updates", "Professional finish", "Customer-first"],
-        availability: "Available",
-      }));
-
-  const filteredServices = category === "all" 
-    ? allServices 
-    : category === "emergency"
-    ? allServices.filter((service) => brand.serviceCategories?.emergency?.includes(service.title))
-    : category === "specialized"
-    ? allServices.filter((service) => brand.serviceCategories?.specialized?.includes(service.title))
-    : allServices;
-
-  const categoryTitle = category === "emergency" 
-    ? "Emergency Towing Services" 
-    : category === "specialized" 
-    ? "Specialized Towing Services" 
-    : "All Towing Services";
-
-  const process = brand.processSteps || [];
-
-  const quickCategories = [
-    { name: "All", category: "all", icon: <Sparkles className="h-5 w-5" />, color: "from-red-500 to-red-600" },
-    { name: "Emergency", category: "emergency", icon: <AlertCircle className="h-5 w-5" />, color: "from-red-500 to-red-600" },
-    { name: "Specialized", category: "specialized", icon: <Truck className="h-5 w-5" />, color: "from-yellow-400 to-yellow-500" },
+  const heroImages = [
+    "/images/Kitchen Work 2.jpeg",
+    "/images/Bathroom Work2.jpeg",
+    "/images/House Work7.jpeg",
+    "/images/Living Room.jpeg",
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const serviceIcons: Record<string, JSX.Element> = {
+    "Kitchen Remodeling": <Wrench className="h-8 w-8" />,
+    "Bathroom Remodeling": <Sparkles className="h-8 w-8" />,
+    "Window Replacement": <Home className="h-8 w-8" />,
+    "Painting Services": <Paintbrush className="h-8 w-8" />,
+    "Home Improvement": <Home className="h-8 w-8" />,
+    "Junk Removal": <Trash2 className="h-8 w-8" />,
+  };
+
+  const serviceImages: Record<string, string> = {
+    "Kitchen Remodeling": "/images/Kitchen Work 2.jpeg",
+    "Bathroom Remodeling": "/images/Bathroom Work2.jpeg",
+    "Window Replacement": "/images/House Work2.jpeg",
+    "Painting Services": "/images/Living Room.jpeg",
+    "Home Improvement": "/images/House Work7.jpeg",
+    "Junk Removal": "/images/Junk Removal.jpeg",
+  };
+
+  const processSteps = brand.processSteps || [];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Hero Section with Image */}
-      <section className="relative py-20 bg-white overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 opacity-10">
-          <img
-            src="/images/Camion lluvia.jpg"
-            alt="Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
+      {/* Hero Section */}
+      <section
+        className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-br from-[#1e3a8a] via-[#1e40af] to-[#1e3a8a] overflow-hidden"
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+        }}
+      >
+        {/* Animated Background Images */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-50 animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 animate-float" style={{ animationDelay: "1s" }}></div>
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-center md:text-left">
-              <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full mb-6">
-                <Truck className="h-5 w-5 text-red-600" />
-                <span className="text-sm font-semibold text-red-600">OUR SERVICES</span>
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-                {categoryTitle}
-              </h1>
-              <p className="text-xl text-gray-600">
-                {category === "emergency" 
-                  ? "24/7 emergency towing and roadside assistance throughout Boston. Fast response times when you need help most."
-                  : category === "specialized"
-                  ? "Specialized towing services for all vehicle types. Professional equipment and experienced operators."
-                  : "Professional towing and roadside assistance services. Fast, reliable, and safe vehicle transport."}
-              </p>
-            </div>
-            
-            {/* Hero Image */}
-            <div className="relative hidden md:block">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                <div className="aspect-[4/3]">
-                  <img
-                    src="/images/Camion choquesedan.jpg"
-                    alt="Towing service"
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-red-900/40 to-transparent"></div>
-              </div>
-              
-              {/* Floating Logo */}
-              <div className="absolute -bottom-6 -right-6 w-28 h-28 bg-white rounded-full p-3 shadow-2xl border-4 border-red-600 animate-float overflow-hidden">
-                <img
-                  src="/images/Logo.png"
-                  alt="Logo"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Category Selector */}
-      <section className="py-8 bg-gradient-to-r from-red-600 to-red-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            {quickCategories.map((cat, index) => (
-              <Link
-                key={cat.category}
-                to={`/servicios?category=${cat.category}`}
-                className={`group relative overflow-hidden bg-gradient-to-br ${cat.color} rounded-2xl px-6 py-4 text-white font-semibold transform transition-all duration-300 hover:scale-110 hover:shadow-2xl animate-fade-in-up ${
-                  category === cat.category ? "ring-4 ring-white/50 scale-110" : ""
+          {heroImages.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Service ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentImageIndex ? "opacity-30" : "opacity-0"
                 }`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative z-10 flex items-center gap-2">
-                  {cat.icon}
-                  {cat.name}
-                </div>
-              </Link>
-            ))}
-          </div>
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e3a8a]/90 via-[#1e3a8a]/80 to-[#1e40af]/90"></div>
         </div>
-      </section>
 
-      {/* Image Showcase Section */}
-      <section className="py-12 bg-gradient-to-r from-red-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              "/images/Camiion carretera.jpg",
-              "/images/Camion choquecrv.jpg",
-              "/images/Camion choquesedan.jpg",
-              "/images/Camion lluvia.jpg",
-            ].map((src, index) => (
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] animate-gradient-shift"></div>
+        </div>
+
+        {/* Floating Orbs */}
+        <div
+          className="absolute top-20 right-20 w-96 h-96 bg-[#fbbf24]/20 rounded-full blur-3xl animate-pulse"
+          style={{
+            transform: `translate(${(mousePosition.x - 500) * 0.05}px, ${(mousePosition.y - 300) * 0.05}px)`,
+            transition: "transform 0.3s ease-out"
+          }}
+        ></div>
+        <div
+          className="absolute bottom-20 left-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl animate-bounce-slow"
+          style={{
+            transform: `translate(${(mousePosition.x - 500) * -0.03}px, ${(mousePosition.y - 300) * -0.03}px)`,
+            transition: "transform 0.3s ease-out"
+          }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-[#fbbf24]/5 rounded-full blur-3xl animate-pulse"
+          style={{
+            transform: `translate(calc(-50% + ${(mousePosition.x - 500) * 0.02}px), calc(-50% + ${(mousePosition.y - 300) * 0.02}px))`,
+            transition: "transform 0.3s ease-out"
+          }}
+        ></div>
+
+        {/* Floating Service Icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          {services.slice(0, 6).map((service, index) => {
+            const animations = [
+              "animate-float-swap",
+              "animate-float-swap-2",
+              "animate-float-swap-3",
+              "animate-float-swap-4",
+              "animate-float-orbit",
+              "animate-float-orbit-reverse"
+            ];
+            return (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`absolute top-1/2 left-1/2 ${animations[index % animations.length]}`}
+                style={{
+                  animationDelay: `${index * 2.5}s`,
+                  animationDuration: `${15 + index * 2}s`
+                }}
               >
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={src}
-                    alt={`Towing service ${index + 1}`}
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-125"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute bottom-2 left-2 right-2">
-                    <p className="text-white text-xs font-semibold">Professional Service</p>
-                  </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-full p-4 border-2 border-[#fbbf24]/30 hover:border-[#fbbf24] transition-all group cursor-pointer">
+                  {serviceIcons[service.title] || <Home className="h-8 w-8 text-white group-hover:text-[#fbbf24] transition-colors" />}
                 </div>
               </div>
+            );
+          })}
+        </div>
+
+        {/* Main Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-block mb-6 animate-fade-in-up">
+            <span className="bg-[#fbbf24] text-[#1e3a8a] px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wide animate-pulse-glow-yellow shadow-lg">
+              Our Services
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            Transform Your
+            <br />
+            <span className="text-[#fbbf24] relative inline-block">
+              Home Today
+              <div className="absolute -bottom-2 left-0 w-full h-3 bg-[#fbbf24]/30 -z-10 transform rotate-[-2deg]"></div>
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            Comprehensive home improvement solutions for every need
+          </p>
+          <div className="w-24 h-1 bg-[#fbbf24] mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: "0.3s" }}></div>
+
+          {/* Interactive CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            <Button
+              asChild
+              size="lg"
+              className="bg-[#fbbf24] text-[#1e3a8a] hover:bg-[#f59e0b] text-lg px-8 py-6 font-bold shadow-xl hover:shadow-2xl transition-all hover:scale-105 animate-pulse-glow-yellow"
+            >
+              <a href={`tel:${brand.phoneE164}`} className="flex items-center">
+                <Phone className="mr-2 h-5 w-5" />
+                CALL {brand.phoneDisplay}
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 border-2 border-white text-lg px-8 py-6 font-bold shadow-xl hover:shadow-2xl transition-all hover:scale-105"
+            >
+              <Link to="/contacto" className="flex items-center">
+                Schedule ur visit
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+
+          {/* Image Indicators */}
+          <div className="flex justify-center gap-2 mt-8 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${index === currentImageIndex ? "w-8 bg-[#fbbf24]" : "w-2 bg-white/30 hover:bg-white/50"
+                  }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
             ))}
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2"></div>
           </div>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+        {/* Floating Construction Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-particle-float"
+              style={{
+                left: `${(i * 6.66) % 100}%`,
+                top: `${(i * 8) % 100}%`,
+                animationDelay: `${i * 0.4}s`,
+                animationDuration: `${8 + (i % 4) * 1.5}s`
+              }}
+            >
+              <div className="text-[#1e3a8a]/10">
+                {(() => {
+                  const IconComponent = [Hammer, Wrench, Settings, Building, HardHat, Award, Star, CheckCircle, Home, Paintbrush, Sparkles, Phone, Clock, Users, Trash2][i % 15];
+                  return IconComponent ? <IconComponent className={`h-5 w-5 ${i % 3 === 0 ? 'animate-tool-rotate' : i % 3 === 1 ? 'animate-hammer-hit' : 'animate-sparkle'}`} /> : null;
+                })()}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredServices.map((service, index) => (
+            {services.map((service, index) => (
               <Card
                 key={index}
-                className={`border-2 transition-all duration-500 cursor-pointer overflow-hidden ${
-                  hoveredService === index
-                    ? "border-red-500 shadow-2xl scale-105 bg-red-50"
-                    : "border-gray-200 hover:border-red-300 hover:shadow-xl bg-white"
-                } animate-fade-in-up`}
-                style={{ animationDelay: `${index * 0.05}s` }}
+                className="group relative overflow-hidden border-2 border-gray-200 hover:border-[#1e3a8a] transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl bg-white animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
                 onMouseEnter={() => setHoveredService(index)}
                 onMouseLeave={() => setHoveredService(null)}
               >
-                <div className={`h-1 bg-gradient-to-r from-red-600 to-red-700 transition-all duration-500 ${
-                  hoveredService === index ? "h-2" : ""
-                }`}></div>
-                <CardHeader className="pb-4">
-                  <div className={`flex justify-center mb-4 transform transition-all duration-500 ${
-                    hoveredService === index ? "scale-125 rotate-6" : ""
-                  }`}>
-                    <div className={`p-4 rounded-2xl transition-all duration-500 ${
-                      hoveredService === index
-                        ? "bg-gradient-to-br from-red-600 to-red-700 text-white shadow-xl"
-                        : "bg-red-50 text-red-600"
-                    }`}>
-                      {iconFor(service.title)}
+                {/* Pulse Ring Effect */}
+                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 rounded-full bg-[#fbbf24]/30 animate-pulse-ring"></div>
+                  </div>
+                </div>
+
+                <CardHeader className="relative h-48 p-0 overflow-hidden z-10">
+                  <img
+                    src={serviceImages[service.title] || "/images/House Work7.jpeg"}
+                    alt={service.title}
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-[#1e3a8a]/70 via-[#1e3a8a]/65 to-[#1e40af]/60"></div>
+
+                  {/* Shimmer Effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute inset-0 animate-shimmer"></div>
+                  </div>
+
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className={`transform transition-all duration-500 relative ${hoveredService === index ? 'scale-125 rotate-12' : 'scale-100'
+                      }`}>
+                      {serviceIcons[service.title] || <Home className="h-16 w-16 text-white" />}
+                      {/* Sparkle around icon */}
+                      <div className="absolute -top-2 -right-2 w-4 h-4 bg-[#fbbf24] rounded-full animate-sparkle opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-[#fbbf24] rounded-full animate-sparkle opacity-0 group-hover:opacity-100 transition-opacity" style={{ animationDelay: "0.3s" }}></div>
                     </div>
                   </div>
-                  <CardTitle className="text-xl font-bold text-gray-900 text-center mb-2 group-hover:text-red-600 transition-colors">
+                  <div className="absolute top-4 right-4 bg-[#fbbf24] text-[#1e3a8a] px-3 py-1 rounded-full text-xs font-bold group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 relative z-20">
+                    {service.availability}
+                    <div className="absolute inset-0 rounded-full bg-[#fbbf24] opacity-0 group-hover:opacity-50 animate-pulse-ring"></div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#1e3a8a] via-[#1e3a8a]/80 to-transparent"></div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <CardTitle className="text-2xl font-bold text-[#1e3a8a] mb-3">
                     {service.title}
                   </CardTitle>
-                  <p className="text-gray-600 text-center text-sm">
+                  <p className="text-gray-600 mb-4">
                     {service.description}
                   </p>
-                </CardHeader>
-
-                <CardContent className="pt-0">
-                  <ul className="space-y-2 mb-6">
-                    {(service.features || []).slice(0, 3).map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-600">
-                        <CheckCircle className={`h-4 w-4 mr-2 flex-shrink-0 transition-colors ${
-                          hoveredService === index ? "text-red-600" : "text-gray-400"
-                        }`} />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="border-t border-gray-100 pt-4">
-                    <p className={`text-sm font-semibold mb-3 text-center transition-colors ${
-                      hoveredService === index ? "text-red-600" : "text-gray-600"
-                    }`}>
-                      {service.availability || "Available"}
-                    </p>
-                    <Link to="/contacto" className="block">
-                      <Button
-                        className={`w-full transition-all transform ${
-                          hoveredService === index
-                            ? "bg-gradient-to-r from-red-600 to-red-700 text-white scale-105"
-                            : "bg-red-600 hover:bg-red-700 text-white"
-                        }`}
+                  <div className="space-y-2 mb-6">
+                    {service.features?.map((feature, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-2 text-sm group/feature"
+                        style={{ animationDelay: `${idx * 0.1}s` }}
                       >
-                        Request Service
-                        <ArrowRight className={`ml-2 h-4 w-4 transition-transform ${
-                          hoveredService === index ? "translate-x-2" : ""
-                        }`} />
-                      </Button>
-                    </Link>
+                        <CheckCircle className="h-4 w-4 text-[#fbbf24] flex-shrink-0 group-hover/feature:scale-110 group-hover/feature:rotate-12 transition-all duration-300" />
+                        <span className="text-gray-700 group-hover/feature:text-[#1e3a8a] group-hover/feature:font-semibold transition-all">{feature}</span>
+                      </div>
+                    ))}
                   </div>
+                  <Button
+                    asChild
+                    className="w-full bg-[#1e3a8a] hover:bg-[#1e40af] text-white font-semibold group/btn relative overflow-hidden"
+                  >
+                    <Link to="/contacto" className="flex items-center justify-center relative z-10">
+                      <span className="absolute inset-0 bg-gradient-to-r from-[#fbbf24]/0 via-[#fbbf24]/20 to-[#fbbf24]/0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></span>
+                      Get Quote
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -266,61 +309,73 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Process Section - Interactive */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-block bg-red-50 px-4 py-2 rounded-full mb-4">
-              <span className="text-sm font-semibold text-red-600">HOW IT WORKS</span>
+      {/* Process Section */}
+      <section className="py-20 bg-[#1e3a8a] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] animate-gradient-shift"></div>
+        </div>
+
+        {/* Floating Process Icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(12)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute animate-particle-float"
+              style={{
+                left: `${(i * 8.33) % 100}%`,
+                top: `${(i * 10) % 100}%`,
+                animationDelay: `${i * 0.6}s`,
+                animationDuration: `${9 + (i % 4) * 1.5}s`
+              }}
+            >
+              <div className="text-[#fbbf24]/15">
+                {(() => {
+                  const IconComponent = [CheckCircle, Award, Star, Clock, Users, Home, Wrench, Settings, Building, HardHat, Hammer, Sparkles][i % 12];
+                  return IconComponent ? <IconComponent className={`h-6 w-6 ${i % 3 === 0 ? 'animate-tool-rotate' : i % 3 === 1 ? 'animate-sparkle' : 'animate-hammer-hit'}`} /> : null;
+                })()}
+              </div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Simple Process
+          ))}
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Our Process
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Simple steps to get help fast when you need it most.
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              From consultation to completion, we make it simple
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((item, index) => (
+            {processSteps.map((step, index) => (
               <div
                 key={index}
-                className={`text-center bg-white p-8 rounded-2xl shadow-lg transition-all duration-500 cursor-pointer border-2 ${
-                  hoveredStep === index
-                    ? "border-red-500 shadow-2xl scale-110 bg-red-50"
-                    : "border-gray-200 hover:border-red-300 hover:shadow-xl"
-                } animate-fade-in-up`}
+                className="relative bg-white/10 backdrop-blur-sm p-6 rounded-2xl hover:bg-white/20 transition-all border-l-4 border-[#fbbf24] animate-fade-in-up group overflow-hidden"
                 style={{ animationDelay: `${index * 0.1}s` }}
-                onMouseEnter={() => setHoveredStep(index)}
-                onMouseLeave={() => setHoveredStep(null)}
               >
-                <div className="relative mb-6">
-                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto text-2xl font-bold transition-all duration-500 ${
-                    hoveredStep === index
-                      ? "bg-gradient-to-br from-red-600 to-red-700 text-white shadow-xl scale-110"
-                      : "bg-red-600 text-white"
-                  }`}>
-                    {item.step}
-                  </div>
-                  {index < process.length - 1 && (
-                    <div className="hidden lg:block absolute top-10 left-full w-full h-1 bg-gray-200 -translate-x-8">
-                      <div className={`absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full transition-all duration-500 ${
-                        hoveredStep === index ? "bg-red-600 scale-150" : "bg-gray-300"
-                      }`} />
-                    </div>
-                  )}
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#fbbf24]/0 via-[#fbbf24]/10 to-[#fbbf24]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+
+                <div className="absolute -top-4 -left-4 bg-[#fbbf24] text-[#1e3a8a] w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 relative z-10">
+                  {step.step}
+                  {/* Pulse Ring */}
+                  <div className="absolute inset-0 rounded-full bg-[#fbbf24] opacity-0 group-hover:opacity-50 animate-pulse-ring"></div>
+                  {/* Sparkle */}
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-sparkle opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <h3 className={`text-xl font-bold mb-3 transition-colors ${
-                  hoveredStep === index ? "text-red-600" : "text-gray-900"
-                }`}>
-                  {item.title}
-                </h3>
-                <p className="text-gray-600">
-                  {item.description}
-                </p>
-                {hoveredStep === index && (
-                  <div className="mt-4 flex justify-center">
-                    <div className="w-2 h-2 bg-red-600 rounded-full animate-ping"></div>
+                <div className="mt-4 relative z-10">
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#fbbf24] transition-colors">
+                    {step.title}
+                  </h3>
+                  <p className="text-blue-100 text-sm group-hover:text-white transition-colors">
+                    {step.description}
+                  </p>
+                </div>
+                {index < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-[#fbbf24] group-hover:w-12 transition-all duration-300 relative z-10">
+                    <ArrowRight className="absolute -right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#fbbf24] opacity-0 group-hover:opacity-100 transition-opacity animate-pulse" />
                   </div>
                 )}
               </div>
@@ -329,41 +384,76 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" style={{ animationDelay: "1.5s" }}></div>
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <Star className="h-5 w-5 text-white" />
-            <span className="text-sm font-semibold text-white">READY TO HELP</span>
+      {/* Why Choose Us */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-4">
+              Why Choose A&K Development
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Excellence in every project, satisfaction in every home
+            </p>
           </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: Award, title: "Licensed & Insured", desc: "Fully licensed and insured professionals" },
+              { icon: Users, title: "Expert Team", desc: "Skilled craftsmen with years of experience" },
+              { icon: Clock, title: "On Time", desc: "We respect your time and deliver on schedule" },
+              { icon: Star, title: "Quality Guaranteed", desc: "Satisfaction guaranteed on all our work" }
+            ].map((item, index) => (
+              <div key={index} className="text-center p-6 rounded-xl hover:shadow-xl transition-all group relative overflow-hidden animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 animate-shimmer"></div>
+                </div>
+
+                <div className="bg-[#1e3a8a] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 relative">
+                  <item.icon className="h-8 w-8 text-[#fbbf24]" />
+                  <div className="absolute inset-0 rounded-full bg-[#fbbf24] opacity-0 group-hover:opacity-30 animate-pulse-ring"></div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#fbbf24] rounded-full animate-sparkle opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <h3 className="text-xl font-bold text-[#1e3a8a] mb-2 group-hover:text-[#fbbf24] transition-colors relative z-10">{item.title}</h3>
+                <p className="text-gray-600 group-hover:text-[#1e3a8a] group-hover:font-semibold transition-all relative z-10">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-[#1e3a8a] via-[#1e40af] to-[#1e3a8a] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
+        </div>
+        <div className="absolute top-20 right-20 w-64 h-64 bg-[#fbbf24]/20 rounded-full blur-3xl animate-pulse"></div>
+
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Need Emergency Towing?
+            Ready to Get Started?
           </h2>
-          <p className="text-xl text-red-100 mb-8">
-            Don't wait! Call us now for immediate 24/7 assistance.
+          <p className="text-xl text-blue-100 mb-8">
+            Contact us today to schedule ur visit
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               asChild
               size="lg"
-              className="bg-yellow-400 text-red-600 hover:bg-yellow-300 text-lg px-10 py-6 font-semibold shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105"
+              className="bg-[#fbbf24] text-[#1e3a8a] hover:bg-[#f59e0b] text-lg px-10 py-6 font-bold shadow-xl hover:shadow-2xl transition-all hover:scale-105"
             >
               <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
                 <Phone className="mr-2 h-6 w-6" />
-                CALL NOW
+                CALL {brand.phoneDisplay}
               </a>
             </Button>
             <Button
               asChild
               size="lg"
-              className="bg-white text-red-600 hover:bg-red-50 border-2 border-white text-lg px-10 py-6 font-semibold shadow-xl hover:shadow-2xl transition-all"
+              className="bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 border-2 border-white text-lg px-10 py-6 font-bold shadow-xl hover:shadow-2xl transition-all hover:scale-105"
             >
               <Link to="/contacto" className="flex items-center justify-center">
-                Request Service Online
+                Schedule ur visit
                 <ArrowRight className="ml-2 h-6 w-6" />
               </Link>
             </Button>
