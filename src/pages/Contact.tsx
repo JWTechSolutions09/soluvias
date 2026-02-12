@@ -326,8 +326,13 @@ const Contact = () => {
                   <h3 className="text-lg font-bold text-[#1e3a8a] mb-2 group-hover:text-[#fbbf24] transition-colors">{info.title}</h3>
                   <a
                     href={info.link}
-                    className="text-gray-600 hover:text-[#1e3a8a] transition-colors block group-hover:font-semibold text-xs leading-tight px-1"
-                    style={{ wordBreak: 'break-all' }}
+                    className="text-gray-600 hover:text-[#1e3a8a] transition-colors block group-hover:font-semibold text-xs px-2 w-full"
+                    style={{ 
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word',
+                      display: 'block',
+                      maxWidth: '100%'
+                    }}
                   >
                     {info.content}
                   </a>
