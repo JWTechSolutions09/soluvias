@@ -315,7 +315,7 @@ const Contact = () => {
                   <div className="absolute inset-0 animate-shimmer"></div>
                 </div>
 
-                <CardContent className="p-6 text-center relative z-10">
+                <CardContent className="p-4 text-center relative z-10">
                   <div className={`bg-gradient-to-br ${info.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 relative`}>
                     {info.icon}
                     {/* Pulse Ring */}
@@ -326,7 +326,8 @@ const Contact = () => {
                   <h3 className="text-lg font-bold text-[#1e3a8a] mb-2 group-hover:text-[#fbbf24] transition-colors">{info.title}</h3>
                   <a
                     href={info.link}
-                    className="text-gray-600 hover:text-[#1e3a8a] transition-colors block group-hover:font-semibold"
+                    className="text-gray-600 hover:text-[#1e3a8a] transition-colors block group-hover:font-semibold text-xs leading-tight px-1"
+                    style={{ wordBreak: 'break-all' }}
                   >
                     {info.content}
                   </a>
