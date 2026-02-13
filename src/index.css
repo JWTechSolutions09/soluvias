@@ -4,7 +4,7 @@
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
-A&K DEVELOPMENT - Yellow & Dark Blue Theme
+SOLUVIAS - Yellow & Black Theme
 */
 
 @layer base {
@@ -19,50 +19,50 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
   --popover: 0 0% 100%;
   --popover-foreground: 222 47% 11%;
 
-  /* Brand Dark Blue & Yellow for A&K Development */
-  --primary: 222 71% 30%; /* Dark Blue #1e3a8a */
+  /* Brand Black & Yellow for Soluvias */
+  --primary: 0 0% 0%; /* Black */
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 45 93% 58%; /* Yellow #fbbf24 */
-  --secondary-foreground: 222 47% 11%;
+  --secondary: 48 100% 50%; /* Yellow #FFD700 */
+  --secondary-foreground: 0 0% 0%;
 
   --muted: 0 0% 96%;
   --muted-foreground: 222 47% 40%;
 
-  /* Accent = brand dark blue */
-  --accent: 222 71% 30%;
+  /* Accent = brand black */
+  --accent: 0 0% 0%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 222 71% 30% / 0.2;
-  --input: 222 71% 30% / 0.1;
-  --ring: 222 71% 30%;
+  --border: 0 0% 0% / 0.2;
+  --input: 0 0% 0% / 0.1;
+  --ring: 0 0% 0%;
 
-  /* Custom gradients for blue/yellow theme */
-  --tech-gradient: linear-gradient(135deg, hsl(222 71% 30%), hsl(45 93% 58%));
+  /* Custom gradients for black/yellow theme */
+  --tech-gradient: linear-gradient(135deg, hsl(0 0% 0%), hsl(48 100% 50%));
   --hero-gradient:
-    linear-gradient(135deg, hsl(222 71% 30%) 0%, hsl(222 71% 40%) 50%, hsl(45 93% 58%) 100%);
+    linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 20%) 50%, hsl(48 100% 50%) 100%);
 
   --card-gradient: linear-gradient(180deg, hsl(0 0% 100%), hsl(222 47% 98%));
 
-  /* Shadows with blue/yellow tint */
-  --shadow-soft: 0 4px 20px hsl(222 71% 30% / 0.15);
-  --shadow-medium: 0 8px 30px hsl(222 71% 30% / 0.2);
-  --shadow-strong: 0 12px 40px hsl(222 71% 30% / 0.25);
+  /* Shadows with black/yellow tint */
+  --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.15);
+  --shadow-medium: 0 8px 30px hsl(0 0% 0% / 0.2);
+  --shadow-strong: 0 12px 40px hsl(0 0% 0% / 0.25);
 
   --radius: 0.75rem;
 
   /* Sidebar tokens */
-  --sidebar-background: 222 47% 6%;
+  --sidebar-background: 0 0% 6%;
   --sidebar-foreground: 0 0% 95%;
-  --sidebar-primary: 222 71% 30%;
+  --sidebar-primary: 0 0% 0%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 222 47% 10%;
+  --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 95%;
-  --sidebar-border: 222 47% 16%;
-  --sidebar-ring: 222 71% 30%;
+  --sidebar-border: 0 0% 16%;
+  --sidebar-ring: 0 0% 0%;
 }
 
 
@@ -76,33 +76,33 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
   --popover: 222 47% 7%;
   --popover-foreground: 0 0% 98%;
 
-  --primary: 222 71% 30%;
+  --primary: 0 0% 0%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 45 93% 58%;
-  --secondary-foreground: 222 47% 11%;
+  --secondary: 48 100% 50%;
+  --secondary-foreground: 0 0% 0%;
 
-  --muted: 222 47% 12%;
+  --muted: 0 0% 12%;
   --muted-foreground: 0 0% 70%;
 
-  --accent: 222 71% 30%;
+  --accent: 0 0% 0%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 222 71% 30% / 0.2;
-  --input: 222 71% 30% / 0.1;
-  --ring: 222 71% 30%;
+  --border: 0 0% 0% / 0.2;
+  --input: 0 0% 0% / 0.1;
+  --ring: 0 0% 0%;
 
-  --sidebar-background: 222 47% 6%;
+  --sidebar-background: 0 0% 6%;
   --sidebar-foreground: 0 0% 95%;
-  --sidebar-primary: 222 71% 30%;
+  --sidebar-primary: 0 0% 0%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 222 47% 10%;
+  --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 95%;
-  --sidebar-border: 222 47% 16%;
-  --sidebar-ring: 222 71% 30%;
+  --sidebar-border: 0 0% 16%;
+  --sidebar-ring: 0 0% 0%;
 }
 
 }
@@ -118,7 +118,7 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
 }
 
 /* =========================================
-   NAVBAR – A&K DEVELOPMENT STYLE
+   NAVBAR – SOLUVIAS STYLE
    ========================================= */
 
 .navbar-ak {
@@ -127,17 +127,17 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
   z-index: 50;
   background: white;
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(30, 58, 138, 0.1);
-  border-bottom: 3px solid hsl(45 93% 58%);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid hsl(48 100% 50%);
   transition: all 0.3s ease;
 }
 
 .navbar-ak:hover {
-  box-shadow: 0 4px 30px rgba(30, 58, 138, 0.15);
-  border-bottom-color: hsl(45 93% 58%);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+  border-bottom-color: hsl(48 100% 50%);
 }
 
-/* Blue/Yellow theme animations */
+/* Black/Yellow theme animations */
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 20px hsl(222 71% 30% / 0.3);
@@ -149,10 +149,10 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
 
 @keyframes pulse-glow-yellow {
   0%, 100% {
-    box-shadow: 0 0 20px hsl(45 93% 58% / 0.4);
+    box-shadow: 0 0 20px hsl(48 100% 50% / 0.4);
   }
   50% {
-    box-shadow: 0 0 40px hsl(45 93% 58% / 0.7);
+    box-shadow: 0 0 40px hsl(48 100% 50% / 0.7);
   }
 }
 
@@ -529,10 +529,10 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
 
 @keyframes glow-pulse {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
   }
   50% {
-    box-shadow: 0 0 40px rgba(251, 191, 36, 0.8), 0 0 60px rgba(251, 191, 36, 0.4);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.4);
   }
 }
 
@@ -577,4 +577,65 @@ A&K DEVELOPMENT - Yellow & Dark Blue Theme
 
 .animate-glow-pulse {
   animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Animaciones Únicas para Soluvias - Seguridad Vial */
+@keyframes road-line {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes road-line-slow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes sign-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(12px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-road-line {
+  animation: road-line 2s linear infinite;
+}
+
+.animate-road-line-slow {
+  animation: road-line-slow 3s linear infinite;
+}
+
+.animate-sign-float {
+  animation: sign-float 3s ease-in-out infinite;
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.5s ease-in-out infinite;
 }

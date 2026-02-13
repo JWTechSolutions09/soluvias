@@ -25,10 +25,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Videos pesados
-*.mp4
-*.mov
-*.mkv
-*.avi
-*.webm

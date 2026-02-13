@@ -105,10 +105,10 @@ export default {
 				},
 				'pulse-glow-yellow': {
 					'0%, 100%': {
-						boxShadow: '0 0 20px hsl(45 93% 58% / 0.4)'
+						boxShadow: '0 0 20px hsl(48 100% 50% / 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 40px hsl(45 93% 58% / 0.7)'
+						boxShadow: '0 0 40px hsl(48 100% 50% / 0.7)'
 					}
 				},
 				'wave': {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Home, Hammer, Image as ImageIcon, Mail, MapPin } from "lucide-react";
+import { Menu, X, Phone, Home, Shield, Image as ImageIcon, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { brand } from "@/config/brand";
 
@@ -18,11 +18,11 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: "Home", path: "/", icon: Home },
-    { name: "About", path: "/nosotros", icon: Hammer },
-    { name: "Services", path: "/servicios", icon: Hammer },
-    { name: "Gallery", path: "/proyectos", icon: ImageIcon },
-    { name: "Contact", path: "/contacto", icon: Mail },
+    { name: "Inicio", path: "/", icon: Home },
+    { name: "Nosotros", path: "/nosotros", icon: Shield },
+    { name: "Servicios", path: "/servicios", icon: Shield },
+    { name: "Proyectos", path: "/proyectos", icon: ImageIcon },
+    { name: "Contacto", path: "/contacto", icon: Mail },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -37,18 +37,18 @@ const Navbar = () => {
             className="flex items-center space-x-3 group hover:opacity-90 transition-opacity"
           >
             <div className="relative group-hover:scale-105 transition-transform duration-300">
-              <img
-                src="/images/Logo.jpg"
-                alt="A&K Development Logo"
-                className="h-14 w-14 sm:h-16 sm:w-16 object-contain drop-shadow-lg"
+              <img 
+                src="/gallery/Logo.jpeg" 
+                alt="Soluvias Logo" 
+                className="h-14 w-14 sm:h-16 sm:w-16 object-cover rounded-full"
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-bold text-[#1e3a8a] leading-tight group-hover:text-[#1e40af] transition-colors">
-                A&K DEVELOPMENT
+              <span className="text-lg sm:text-xl font-bold text-black leading-tight group-hover:text-yellow-500 transition-colors">
+                SOLUVIAS
               </span>
-              <span className="text-xs text-[#fbbf24] font-semibold hidden sm:block">
-                YOUR HOME SOLUTION
+              <span className="text-xs text-yellow-500 font-semibold hidden sm:block">
+                SEGURIDAD VIAL
               </span>
             </div>
           </Link>
@@ -63,8 +63,8 @@ const Navbar = () => {
                   to={item.path}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                     isActive(item.path)
-                      ? "bg-[#1e3a8a] text-white font-semibold shadow-md"
-                      : "text-gray-700 hover:bg-[#fbbf24] hover:text-[#1e3a8a]"
+                      ? "bg-black text-yellow-400 font-semibold shadow-md"
+                      : "text-gray-700 hover:bg-yellow-400 hover:text-black"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -78,7 +78,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center space-x-3 ml-6">
             <Button
               asChild
-              className="bg-[#fbbf24] hover:bg-[#f59e0b] text-[#1e3a8a] px-6 py-2.5 font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2.5 font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
             >
               <a href={`tel:${brand.phoneE164}`} className="flex items-center">
                 <Phone className="mr-2 h-4 w-4" />
@@ -93,7 +93,7 @@ const Navbar = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-[#1e3a8a] hover:bg-[#fbbf24]"
+              className="text-black hover:bg-yellow-400"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -102,7 +102,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden py-4 border-t-2 border-[#fbbf24] animate-fade-in-up bg-white">
+          <div className="lg:hidden py-4 border-t-2 border-yellow-400 animate-fade-in-up bg-white">
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -113,8 +113,8 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className={`px-4 py-3 rounded-lg text-base font-medium transition-colors flex items-center gap-3 ${
                       isActive(item.path)
-                        ? "bg-[#1e3a8a] text-white font-semibold"
-                        : "text-gray-700 hover:bg-[#fbbf24] hover:text-[#1e3a8a]"
+                        ? "bg-black text-yellow-400 font-semibold"
+                        : "text-gray-700 hover:bg-yellow-400 hover:text-black"
                     }`}
                   >
                     <Icon className="h-5 w-5" />
@@ -124,7 +124,7 @@ const Navbar = () => {
               })}
               <Button
                 asChild
-                className="mt-4 bg-[#fbbf24] hover:bg-[#f59e0b] text-[#1e3a8a] w-full py-3 font-bold shadow-lg"
+                className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-black w-full py-3 font-bold shadow-lg"
                 onClick={() => setIsOpen(false)}
               >
                 <a href={`tel:${brand.phoneE164}`} className="flex items-center justify-center">
